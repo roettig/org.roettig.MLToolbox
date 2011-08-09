@@ -20,6 +20,7 @@ import org.roettig.MLToolbox.base.impl.DefaultInstanceContainer;
 import org.roettig.MLToolbox.base.instance.PrimalInstance;
 import org.roettig.MLToolbox.kernels.LinearKernel;
 import org.roettig.MLToolbox.model.CSVCModel;
+import org.roettig.MLToolbox.model.Model;
 import org.roettig.MLToolbox.test.data.DataSource;
 import org.roettig.MLToolbox.validation.ModelValidation;
 
@@ -114,17 +115,18 @@ public class SerialClone
 
 	public static void main(String[] args) throws Exception
 	{
-		
+		/*
 		DefaultInstanceContainer<PrimalInstance> samples = InstanceReader.read(DataSource.class.getResourceAsStream("iris_big.dat"), 5, true);
 		
 		LinearKernel lk = new LinearKernel();
 		
-		CSVCModel<PrimalInstance> m  = new CSVCModel<PrimalInstance>(lk);
+		Model<T> m  = new CSVCModel<PrimalInstance>(lk);
 		List<Prediction> preds = new ArrayList<Prediction>();
 		long t1 = System.currentTimeMillis();
 		ModelValidation.CV(10, samples, m, preds);
 		long t2 = System.currentTimeMillis();
 		System.out.println((t2-t1)+" ms");
+		*/
 		/*
 		m.setC(0.01);
 		
