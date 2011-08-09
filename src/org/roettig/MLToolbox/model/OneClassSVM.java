@@ -124,18 +124,6 @@ public class OneClassSVM<T extends Instance> extends LibsvmModel<T> implements C
 		return preds;
 	}
 	
-	@Override
-	public double getQuality(List<Prediction> predictions)
-	{
-		return qm.getQuality(predictions);
-	}
-
-	@Override
-	public void setQualityMeasure(QualityMeasure qm)
-	{
-		this.qm = qm;
-	}
-	
 	public static void main(String[] args) throws Exception
 	{
 		

@@ -16,7 +16,6 @@ public abstract class LibsvmModel<T extends Instance> extends Model<T>
 	protected libsvmDelegate<T> libsvmdelegate;
 	protected KernelFunction<T> k_fun;
 	protected transient InstanceContainer<T> trainingdata;
-	protected QualityMeasure qm;
 	
 	public LibsvmModel(KernelFunction<T> k_fun_)
 	{
@@ -43,11 +42,5 @@ public abstract class LibsvmModel<T extends Instance> extends Model<T>
 
 	@Override
 	public abstract List<Prediction> predict(InstanceContainer<T> testdata);
-
-	@Override
-	public double getQuality(List<Prediction> predictions)
-	{
-		return qm.getQuality(predictions);
-	}
 
 }

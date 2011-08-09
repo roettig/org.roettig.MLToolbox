@@ -2,7 +2,6 @@ package org.roettig.MLToolbox.model;
 
 
 import java.util.List;
-
 import org.roettig.MLToolbox.base.Prediction;
 import org.roettig.MLToolbox.base.impl.DefaultParametrizedComposite;
 import org.roettig.MLToolbox.base.instance.Instance;
@@ -13,6 +12,16 @@ public abstract class Model<T extends Instance> extends DefaultParametrizedCompo
 {
 	public abstract void train(InstanceContainer<T> trainingdata);
 	public abstract List<Prediction> predict(InstanceContainer<T> testdata);
-	public abstract double getQuality(List<Prediction> predictions);
-	public abstract void setQualityMeasure(QualityMeasure qm);
+	
+	public double getQuality(List<Prediction> predictions)
+	{
+		return qm.getQuality(predictions);
+	}
+	
+	public void setQualityMeasure(QualityMeasure qm)
+	{
+		this.qm = qm;
+	}
+
+	protected QualityMeasure qm;
 }

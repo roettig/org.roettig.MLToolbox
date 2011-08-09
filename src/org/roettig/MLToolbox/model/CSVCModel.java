@@ -3,26 +3,20 @@ package org.roettig.MLToolbox.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-
 import org.roettig.MLToolbox.base.Prediction;
 import org.roettig.MLToolbox.base.impl.DefaultInstanceContainer;
 import org.roettig.MLToolbox.base.instance.Instance;
 import org.roettig.MLToolbox.base.instance.InstanceContainer;
-import org.roettig.MLToolbox.base.instance.LabelSupplier;
 import org.roettig.MLToolbox.base.instance.PrimalInstance;
 import org.roettig.MLToolbox.base.label.FactorLabel;
 import org.roettig.MLToolbox.base.label.Label;
-import org.roettig.MLToolbox.base.label.LabelFactory;
 import org.roettig.MLToolbox.base.parameter.Parameter;
-import org.roettig.MLToolbox.base.parameter.Parametrized;
 import org.roettig.MLToolbox.kernels.KernelFunction;
 import org.roettig.MLToolbox.kernels.KernelMatrix;
 import org.roettig.MLToolbox.kernels.LinearKernel;
 import org.roettig.MLToolbox.kernels.RBFKernel;
 import org.roettig.MLToolbox.test.data.DataSource;
 import org.roettig.MLToolbox.util.InstanceReader;
-import org.roettig.MLToolbox.util.MLHelper;
 import org.roettig.MLToolbox.util.libsvm.libsvmDelegate;
 import org.roettig.MLToolbox.util.libsvm.svm;
 import org.roettig.MLToolbox.util.libsvm.svm_parameter;
@@ -91,18 +85,6 @@ public class CSVCModel<T extends Instance> extends LibsvmModel<T> implements Cla
 		return preds;
 	}
 
-	@Override
-	public double getQuality(List<Prediction> predictions)
-	{
-		return qm.getQuality(predictions);
-	}
-
-	@Override
-	public void setQualityMeasure(QualityMeasure qm)
-	{
-		this.qm = qm;
-	}
-	
 	public static void main(String[] args) throws Exception
 	{
 		/*

@@ -24,7 +24,6 @@ import org.roettig.MLToolbox.util.libsvm.svm;
 import org.roettig.MLToolbox.util.libsvm.svm_parameter;
 import org.roettig.MLToolbox.validation.ModelValidation;
 import org.roettig.MLToolbox.validation.PearsonMeasure;
-import org.roettig.MLToolbox.validation.QualityMeasure;
 
 
 public class NuSVRModel<T extends Instance> extends LibsvmModel<T>
@@ -95,18 +94,6 @@ public class NuSVRModel<T extends Instance> extends LibsvmModel<T>
 		return preds;
 	}
 
-	@Override
-	public double getQuality(List<Prediction> predictions)
-	{
-		return qm.getQuality(predictions);
-	}
-	
-	@Override
-	public void setQualityMeasure(QualityMeasure qm)
-	{
-		this.qm = qm;
-	}
-	
 	public static void main(String[] args) throws Exception
 	{
 

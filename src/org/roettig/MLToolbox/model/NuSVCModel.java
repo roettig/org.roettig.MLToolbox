@@ -15,7 +15,6 @@ import org.roettig.MLToolbox.util.libsvm.libsvmDelegate;
 import org.roettig.MLToolbox.util.libsvm.svm;
 import org.roettig.MLToolbox.util.libsvm.svm_parameter;
 import org.roettig.MLToolbox.validation.AccuracyMeasure;
-import org.roettig.MLToolbox.validation.QualityMeasure;
 
 public class NuSVCModel<T extends Instance>  extends LibsvmModel<T> implements ClassificationModel
 {
@@ -70,17 +69,5 @@ public class NuSVCModel<T extends Instance>  extends LibsvmModel<T> implements C
 			preds.add(pred);
 		}
 		return preds;
-	}
-
-	@Override
-	public double getQuality(List<Prediction> predictions)
-	{
-		return qm.getQuality(predictions);
-	}
-
-	@Override
-	public void setQualityMeasure(QualityMeasure qm)
-	{
-		this.qm = qm;
 	}
 }
