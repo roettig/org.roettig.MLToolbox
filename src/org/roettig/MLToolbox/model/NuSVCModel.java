@@ -2,7 +2,6 @@ package org.roettig.MLToolbox.model;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.roettig.MLToolbox.base.Prediction;
 import org.roettig.MLToolbox.base.instance.Instance;
 import org.roettig.MLToolbox.base.instance.InstanceContainer;
@@ -14,7 +13,7 @@ import org.roettig.MLToolbox.kernels.KernelMatrix;
 import org.roettig.MLToolbox.util.libsvm.libsvmDelegate;
 import org.roettig.MLToolbox.util.libsvm.svm;
 import org.roettig.MLToolbox.util.libsvm.svm_parameter;
-import org.roettig.MLToolbox.validation.AccuracyMeasure;
+import org.roettig.MLToolbox.validation.FMeasure;
 
 public class NuSVCModel<T extends Instance>  extends LibsvmModel<T> implements ClassificationModel
 {
@@ -28,7 +27,7 @@ public class NuSVCModel<T extends Instance>  extends LibsvmModel<T> implements C
 	{
 		super(k_fun_);
 		this.registerParameter(NU, nu);
-		qm = new AccuracyMeasure();
+		qm = new FMeasure();
 	}
 	
 	@Override

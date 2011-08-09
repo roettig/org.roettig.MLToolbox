@@ -14,7 +14,7 @@ import org.roettig.MLToolbox.kernels.KernelMatrix;
 import org.roettig.MLToolbox.util.libsvm.libsvmDelegate;
 import org.roettig.MLToolbox.util.libsvm.svm;
 import org.roettig.MLToolbox.util.libsvm.svm_parameter;
-import org.roettig.MLToolbox.validation.AccuracyMeasure;
+import org.roettig.MLToolbox.validation.FMeasure;
 
 public class CSVCModel<T extends Instance> extends LibsvmModel<T> implements ClassificationModel
 {
@@ -28,7 +28,7 @@ public class CSVCModel<T extends Instance> extends LibsvmModel<T> implements Cla
 	{
 		super(k_fun_);
 		this.registerParameter(C, c);
-		qm = new AccuracyMeasure();
+		qm = new FMeasure();
 	}
 	
 	@Override
