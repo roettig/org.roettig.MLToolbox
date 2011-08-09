@@ -1,10 +1,7 @@
 package org.roettig.MLToolbox.kernels;
 
-import java.util.List;
-
 import org.roettig.MLToolbox.base.instance.InstanceContainer;
 import org.roettig.MLToolbox.base.instance.PrimalInstance;
-import org.roettig.MLToolbox.base.label.FactorLabel;
 import org.roettig.MLToolbox.base.parameter.Parameter;
 
 public class RBFKernel extends KernelFunction<PrimalInstance>
