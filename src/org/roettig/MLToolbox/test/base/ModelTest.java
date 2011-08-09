@@ -13,6 +13,7 @@ import org.roettig.MLToolbox.base.instance.PrimalInstance;
 import org.roettig.MLToolbox.kernels.LinearKernel;
 import org.roettig.MLToolbox.kernels.RBFKernel;
 import org.roettig.MLToolbox.model.CSVCModel;
+import org.roettig.MLToolbox.model.Model;
 import org.roettig.MLToolbox.model.NuSVCModel;
 import org.roettig.MLToolbox.model.NuSVRModel;
 import org.roettig.MLToolbox.model.OneClassSVM;
@@ -166,7 +167,7 @@ public class ModelTest extends TestCase
 		
 		DefaultInstanceContainer<PrimalInstance> samples = InstanceReader.read(DataSource.class.getResourceAsStream("iris.dat"), 5, true);
 		
-		CSVCModel<PrimalInstance>     m  = new CSVCModel<PrimalInstance>(lK);
+		Model<PrimalInstance>     m  = new CSVCModel<PrimalInstance>(lK);
 		
 		double qual = ModelValidation.CV(5, samples, m);
 		assertEquals(0.96,qual,1e-6);
@@ -187,7 +188,7 @@ public class ModelTest extends TestCase
 		
 		CSVCModel<PrimalInstance>  m  = new CSVCModel<PrimalInstance>(rbf);
 		
-		CSVCModel<PrimalInstance>  m2 = SerialClone.clone(m);
+		Model<PrimalInstance>  m2 = SerialClone.clone(m);
 		
 		
 		m.train(train);
