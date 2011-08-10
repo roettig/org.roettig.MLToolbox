@@ -35,6 +35,13 @@ public class FMeasure implements QualityMeasure
 			Yp.add(p.getPredictedLabel());
 		}
 		
-		return Statistics.calcFMeasure(Yp, Yt);
+		double F = 0.0;
+		
+		if(pos_label!=null)
+			F = Statistics.calcFMeasure(pos_label, Yp, Yt);
+		else
+			F = Statistics.calcFMeasure(Yp, Yt);
+		
+		return F;
 	}
 }
