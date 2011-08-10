@@ -672,4 +672,26 @@ public class ModelValidation
 		return new SelectedModel<T>(m,maxQual);
 	}
 
+	/**
+	 * divides the input into two subsets (discriminator,!discriminator) and labels the first one with label pos and the second one with label neg.
+	 * 
+	 * @param samples
+	 * @param discriminator : the discriminator label
+	 * @param pos
+	 * @param neg
+	 * @return
+	 */
+	public static <T extends Instance> InstanceContainer<T> binaryDivision(InstanceContainer<T> samples, Label discriminator, Label pos, Label neg)
+	{
+		InstanceContainer<T> ret = new DefaultInstanceContainer<T>();
+		for(Instance i: samples)
+		{
+			if(i.getLabel().equals(discriminator))
+				ret.add( (T) i.reassign(pos) );
+			else
+				ret.add( (T) i.reassign(neg) );
+
+		}
+		return ret;
+	}
 }
