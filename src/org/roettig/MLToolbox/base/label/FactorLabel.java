@@ -12,6 +12,8 @@ public class FactorLabel extends Label
 	public static Map<Double,Label>  double_to_label      = new HashMap<Double,Label>();
 	
 	private final String classname;
+	private boolean freelabel = false;
+	private double  val;
 	
 	public static Label fromDoubleValue(double d)
 	{
@@ -20,7 +22,10 @@ public class FactorLabel extends Label
 	
 	public double getDoubleValue()
 	{
-		return classnames_to_double.get(getClassname());
+		if(freelabel)
+			return val;
+		else
+			return classnames_to_double.get(getClassname());
 	}
 	
 	public static FactorLabel makeUnlabeled()
@@ -33,6 +38,13 @@ public class FactorLabel extends Label
 		return this.classname==null;
 	}
 		
+	public FactorLabel(String classname, double val)
+	{
+		freelabel = true;
+		this.classname = classname;
+		this.val = val;
+	}
+	
 	public FactorLabel(String classname)
 	{
 		this.classname = classname;
