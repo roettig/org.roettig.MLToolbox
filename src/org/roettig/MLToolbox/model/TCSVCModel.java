@@ -7,7 +7,7 @@ import java.util.List;
 import org.roettig.MLToolbox.base.Prediction;
 import org.roettig.MLToolbox.base.instance.InstanceContainer;
 import org.roettig.MLToolbox.base.instance.PrimalInstance;
-import org.roettig.MLToolbox.base.label.Label;
+import org.roettig.MLToolbox.base.label.FactorLabel;
 import org.roettig.MLToolbox.base.parameter.Parameter;
 import org.roettig.MLToolbox.validation.FMeasure;
 
@@ -27,8 +27,10 @@ public class TCSVCModel extends Model<PrimalInstance> implements ClassificationM
 	
 	
 	private SVMLightModel model;
-	public Label POS;
-	public Label NEG;
+	
+	public static FactorLabel POS = new FactorLabel("pos",1.0);
+	public static FactorLabel NEG = new FactorLabel("neg",-1.0);
+	
 	private int verb;
 	
 	public TCSVCModel()
@@ -50,9 +52,7 @@ public class TCSVCModel extends Model<PrimalInstance> implements ClassificationM
 		g = new Parameter<Double>(GAMMA,Gs);
 		this.registerParameter(GAMMA, g);
 	}
-	
-	
-	
+		
 	public void setVerbosity(int verb)
 	{
 		this.verb = verb;
@@ -63,7 +63,7 @@ public class TCSVCModel extends Model<PrimalInstance> implements ClassificationM
 	{
 		this.trainingdata = trainingdata;
 		
-		fetchLabels(trainingdata);
+		//fetchLabels(trainingdata);
 		
 		SVMLightInterface trainer = new SVMLightInterface();
 
@@ -127,11 +127,11 @@ public class TCSVCModel extends Model<PrimalInstance> implements ClassificationM
 	}
 	
 	
-	
+	/*
 	private void fetchLabels(InstanceContainer<PrimalInstance> data)
 	{
-		fetchPosLabel(data);
-		fetchNegLabel(data);
+		//fetchPosLabel(data);
+		//fetchNegLabel(data);
 	}
 	
 	private void fetchPosLabel(InstanceContainer<PrimalInstance> data)
@@ -157,6 +157,8 @@ public class TCSVCModel extends Model<PrimalInstance> implements ClassificationM
 			}
 		}
 	}
+	*/
+	
 	private static LabeledFeatureVector transform(PrimalInstance pi)
 	{
 		int      D    = pi.getNumberOfFeatures();
