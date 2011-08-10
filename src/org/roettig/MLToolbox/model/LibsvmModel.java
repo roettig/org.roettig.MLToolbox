@@ -15,7 +15,6 @@ public abstract class LibsvmModel<T extends Instance> extends Model<T>
 	
 	protected libsvmDelegate<T> libsvmdelegate;
 	protected KernelFunction<T> k_fun;
-	protected transient InstanceContainer<T> trainingdata;
 	
 	public LibsvmModel(KernelFunction<T> k_fun_)
 	{

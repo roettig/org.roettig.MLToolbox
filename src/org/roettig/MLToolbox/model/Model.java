@@ -24,4 +24,6 @@ public abstract class Model<T extends Instance> extends DefaultParametrizedCompo
 	}
 
 	protected QualityMeasure qm;
+	
+	protected transient InstanceContainer<T> trainingdata;
 }
