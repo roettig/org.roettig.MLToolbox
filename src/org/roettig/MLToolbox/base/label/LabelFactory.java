@@ -32,6 +32,4 @@ public class LabelFactory
 		}
 		return lab; 
 	}
-	
-	//public static double getLabelValue(Label lab)
 }
