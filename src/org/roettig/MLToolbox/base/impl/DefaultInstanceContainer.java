@@ -16,7 +16,8 @@ import org.roettig.MLToolbox.base.label.Label;
 
 public class DefaultInstanceContainer<T extends Instance> implements InstanceContainer<T>
 {
-	private List<T> data;
+	private List<T> data = new ArrayList<T>();
+	private List<T> unlab_data = new ArrayList<T>();
 	private LabelSupplier lab_suppl;
 	
 	public DefaultInstanceContainer()
@@ -115,5 +116,18 @@ public class DefaultInstanceContainer<T extends Instance> implements InstanceCon
 		{
 			System.out.println(i.getId());
 		}
+	}
+
+	@Override
+	public void setUnlabeledData(Iterable<T> data)
+	{
+		for(T t: data)
+			unlab_data.add(t);
+	}
+
+	@Override
+	public Collection<T> getUnlabeledData()
+	{
+		return unlab_data;
 	}
 }

@@ -1,5 +1,6 @@
 package org.roettig.MLToolbox.base.instance;
 
+import java.util.Collection;
 import java.util.Random;
 
 
@@ -12,4 +13,6 @@ public interface InstanceContainer<T extends Instance> extends Iterable<T>
 	void setLabelSupplier(LabelSupplier lab_suppl);
 	void shuffle(Random rng);
 	void dump();
+	void setUnlabeledData(Iterable<T> data);
+	Collection<T> getUnlabeledData();
 }

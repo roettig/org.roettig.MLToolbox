@@ -1,6 +1,7 @@
 package org.roettig.MLToolbox.base.instance;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -14,6 +15,7 @@ public class FilteredDataView<T extends Instance> implements InstanceContainer<T
 	protected List<InstanceFilter<T>> filters = new ArrayList<InstanceFilter<T>>();
 	
 	protected List<T> data = new ArrayList<T>(); 
+	protected List<T> unlab_data = new ArrayList<T>();
 	
 	public FilteredDataView()
 	{
@@ -94,5 +96,18 @@ public class FilteredDataView<T extends Instance> implements InstanceContainer<T
 		{
 			System.out.println(i.getId());
 		}
+	}
+	
+	@Override
+	public void setUnlabeledData(Iterable<T> data)
+	{
+		for(T t: data)
+			unlab_data.add(t);
+	}
+
+	@Override
+	public Collection<T> getUnlabeledData()
+	{
+		return unlab_data;
 	}
 }
