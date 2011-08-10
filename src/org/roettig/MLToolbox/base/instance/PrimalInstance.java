@@ -56,4 +56,10 @@ public final class PrimalInstance extends Instance
 	}
 	
 	private double[] features;
+
+	@Override
+	public PrimalInstance reassign(Label lab)
+	{
+		return new PrimalInstance(lab, this.features);
+	}
 }

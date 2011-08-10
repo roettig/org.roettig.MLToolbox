@@ -18,4 +18,10 @@ public final class DualInstance<T> extends Instance
 		return this.payload;
 	}
 
+	@Override
+	public DualInstance<T> reassign(Label lab)
+	{
+		return new DualInstance<T>(lab,this.payload);
+	}
+
 }
