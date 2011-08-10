@@ -34,7 +34,12 @@ public class Precision implements QualityMeasure
 			Yt.add(p.getTrueLabel());
 			Yp.add(p.getPredictedLabel());
 		}
-		List<Double> prec_rec = Statistics.calcPrecRec(Yp, Yt);
+		List<Double> prec_rec = null;
+		
+		if(pos_label!=null)
+			prec_rec = Statistics.calcPrecRec(pos_label, Yp, Yt);
+		else
+			prec_rec = Statistics.calcPrecRec(Yp, Yt);
 		
 		return prec_rec.get(0);
 	}

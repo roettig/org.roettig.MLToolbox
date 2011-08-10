@@ -34,7 +34,11 @@ public class Specificity implements QualityMeasure
 			Yt.add(p.getTrueLabel());
 			Yp.add(p.getPredictedLabel());
 		}
-		List<Double> sens_spec = Statistics.calcSensSpec(Yp, Yt);
+		List<Double> sens_spec = null;
+		if(pos_label!=null)
+			sens_spec = Statistics.calcSensSpec(pos_label, Yp, Yt);
+		else
+			sens_spec = Statistics.calcSensSpec(Yp, Yt);
 		
 		return sens_spec.get(1);
 	}
