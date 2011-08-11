@@ -15,6 +15,13 @@ import org.roettig.MLToolbox.util.libsvm.svm;
 import org.roettig.MLToolbox.util.libsvm.svm_parameter;
 import org.roettig.MLToolbox.validation.FMeasure;
 
+/**
+ * The NuSVCModel is a classification model with parameter <i>nu</i> (upper bound on support vectors).
+ * 
+ * @author roettig
+ *
+ * @param <T> type parameter of instances
+ */
 public class NuSVCModel<T extends Instance>  extends LibsvmModel<T> implements ClassificationModel
 {
 	private static final long	serialVersionUID	= -2300813589119920238L;
@@ -23,6 +30,11 @@ public class NuSVCModel<T extends Instance>  extends LibsvmModel<T> implements C
 	
 	private Parameter<Double> nu = new Parameter<Double>(NU,new Double[]{0.2});
 	
+	/**
+	 * ctor with kernel function to use.
+	 * 
+	 * @param k_fun_ kernel function
+	 */
 	public NuSVCModel(KernelFunction<T> k_fun_)
 	{
 		super(k_fun_);
@@ -38,7 +50,12 @@ public class NuSVCModel<T extends Instance>  extends LibsvmModel<T> implements C
 		libsvmdelegate.param.kernel_type = svm_parameter.PRECOMPUTED;
 		libsvmdelegate.param.nu  = (Double) this.getParameter(NU).getCurrentValue();
 	}
-		
+	
+	/**
+	 * set allowed values for parameter nu.
+	 * 
+	 * @param NUs
+	 */
 	public void setNu(Double... NUs)
 	{
 		nu = new Parameter<Double>(NU,NUs);

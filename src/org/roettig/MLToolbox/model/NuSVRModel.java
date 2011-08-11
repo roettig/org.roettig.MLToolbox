@@ -25,7 +25,13 @@ import org.roettig.MLToolbox.util.libsvm.svm_parameter;
 import org.roettig.MLToolbox.validation.ModelValidation;
 import org.roettig.MLToolbox.validation.PearsonMeasure;
 
-
+/**
+ * The NuSVRModel is a regression model with parameter <i>nu</i>  and <i>C</i>.
+ * 
+ * @author roettig
+ *
+ * @param <T> type parameter of instances
+ */
 public class NuSVRModel<T extends Instance> extends LibsvmModel<T>
 {
 	private static final long	serialVersionUID	= 6206408147990280932L;
@@ -36,6 +42,11 @@ public class NuSVRModel<T extends Instance> extends LibsvmModel<T>
 	private Parameter<Double> nu = new Parameter<Double>(NU,new Double[]{0.5});
 	private Parameter<Double> c  = new Parameter<Double>(C,new Double[]{1.0});
 
+	/**
+	 * ctor with kernel function to use.
+	 * 
+	 * @param k_fun_ kernel function
+	 */
 	public NuSVRModel(KernelFunction<T> k_fun_)
 	{
 		super(k_fun_);
@@ -56,12 +67,21 @@ public class NuSVRModel<T extends Instance> extends LibsvmModel<T>
 		libsvmdelegate.param.nu = (Double) this.getParameter(NU).getCurrentValue();
 	}
 	
+	/**
+	 * set allowed values for parameter C.
+	 * @param Cs
+	 */
 	public void setC(Double... Cs)
 	{
 		Parameter<Double> c = new Parameter<Double>(C,Cs);
 		this.registerParameter(C, c);
 	}
-	
+
+	/**
+	 * set allowed values for parameter nu.
+	 * 
+	 * @param NUs
+	 */
 	public void setNU(Double... NUs)
 	{
 		Parameter<Double> nu = new Parameter<Double>(NU,NUs);
@@ -94,42 +114,4 @@ public class NuSVRModel<T extends Instance> extends LibsvmModel<T>
 		return preds;
 	}
 
-	public static void main(String[] args) throws Exception
-	{
-
-		RBFKernel rbf = new RBFKernel();
-		rbf.setGamma(1.0);
-		
-		DefaultInstanceContainer<PrimalInstance> samples = InstanceReader.read(DataSource.class.getResourceAsStream("sin.dat"), 2, false);
-		
-		NuSVRModel<PrimalInstance>     m  = new NuSVRModel<PrimalInstance>(rbf);
-		m.setC(10.0);
-		m.setNU(0.2);
-		
-		DefaultInstanceContainer<PrimalInstance>  train = new DefaultInstanceContainer<PrimalInstance>();
-		DefaultInstanceContainer<PrimalInstance>  test  = new DefaultInstanceContainer<PrimalInstance>();
-		
-		samples.shuffle(new Random(2204));
-		
-		ModelValidation.getSplit(0.8, samples, train, test);
-		
-		MLHelper.exportLIBSVM(train, "/tmp/sin.trn");
-		MLHelper.exportLIBSVM(test, "/tmp/sin.tst");
-		
-		m.train(train);
-		List<Prediction> preds = m.predict(test);
-		System.out.println(m.getQuality(preds));
-		
-		/*
-		List<Prediction> preds = new ArrayList<Prediction>();
-		double qual = ModelValidation.CV(5, samples, m, preds);
-		
-		for(Prediction pred: preds)
-		{
-			System.out.println(pred.getTrueLabel().getDoubleValue()+" "+pred.getPredictedLabel().getDoubleValue());
-		}
-		
-		System.out.println(qual);
-		*/
-	}
 }

@@ -17,6 +17,12 @@ import jnisvmlight.SVMLightModel;
 import jnisvmlight.SVMLightInterface;
 import jnisvmlight.TrainingParameters;
 
+/**
+ * TCSVCModel is a transductive CSVC model using the RBF kernel. It is based on svmlight.
+ *   
+ * @author roettig
+ *
+ */
 public class TCSVCModel extends Model<PrimalInstance> implements ClassificationModel
 {
 	public static String C     = CSVCModel.class.getCanonicalName()+"_C";
@@ -41,12 +47,22 @@ public class TCSVCModel extends Model<PrimalInstance> implements ClassificationM
 		qm = new FMeasure();
 	}
 	
+	/**
+	 * set allowed values for parameter C.
+	 * 
+	 * @param Cs
+	 */
 	public void setC(Double... Cs)
 	{
 		c = new Parameter<Double>(C,Cs);
 		this.registerParameter(C, c);
 	}
 	
+	/**
+	 * set allowed values for parameter gamma (RBFKernel).
+	 * 
+	 * @param Gs
+	 */
 	public void setGamma(Double... Gs)
 	{
 		g = new Parameter<Double>(GAMMA,Gs);

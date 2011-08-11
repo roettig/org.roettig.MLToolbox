@@ -9,6 +9,13 @@ import org.roettig.MLToolbox.kernels.KernelFunction;
 import org.roettig.MLToolbox.util.libsvm.libsvmDelegate;
 import org.roettig.MLToolbox.validation.QualityMeasure;
 
+/**
+ * The libsvmModel is an intermediate base class for all LIBSVM-based models.
+ * 
+ * @author roettig
+ *
+ * @param <T> type parameter of instance
+ */
 public abstract class LibsvmModel<T extends Instance> extends Model<T>
 {
 	private static final long	serialVersionUID	= 1928980059846902726L;
@@ -27,6 +34,12 @@ public abstract class LibsvmModel<T extends Instance> extends Model<T>
 		libsvmdelegate = new libsvmDelegate<T>(k_fun);
 	}
 	
+	/**
+	 * returns the i-th objective of the optimization process.
+	 * 
+	 * @param i
+	 * @return obj value
+	 */
 	public double getObjectiveValue(int i)
 	{
 		return libsvmdelegate.model.obj[i];

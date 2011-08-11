@@ -16,6 +16,13 @@ import org.roettig.MLToolbox.util.libsvm.svm;
 import org.roettig.MLToolbox.util.libsvm.svm_parameter;
 import org.roettig.MLToolbox.validation.FMeasure;
 
+/**
+ * The CSVCModel is a classification model with parameter <i>C</i> (trade-off between training error and generalization).
+ * 
+ * @author roettig
+ *
+ * @param <T> type parameter of instances
+ */
 public class CSVCModel<T extends Instance> extends LibsvmModel<T> implements ClassificationModel
 {
 	private static final long	serialVersionUID	= -2300813589119920238L;
@@ -24,6 +31,11 @@ public class CSVCModel<T extends Instance> extends LibsvmModel<T> implements Cla
 	
 	private Parameter<Double> c = new Parameter<Double>(C,new Double[]{1.0});
 	
+	/**
+	 * ctor with kernel function to use.
+	 * 
+	 * @param k_fun_ kernel function
+	 */
 	public CSVCModel(KernelFunction<T> k_fun_)
 	{
 		super(k_fun_);
@@ -40,6 +52,11 @@ public class CSVCModel<T extends Instance> extends LibsvmModel<T> implements Cla
 		libsvmdelegate.param.C  = (Double) this.getParameter(C).getCurrentValue();
 	}
 		
+	/**
+	 * set allowed values of parameter C.
+	 * 
+	 * @param Cs allowed values
+	 */
 	public void setC(Double... Cs)
 	{
 		c = new Parameter<Double>(C,Cs);

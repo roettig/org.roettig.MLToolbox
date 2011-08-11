@@ -45,7 +45,11 @@ public class OneClassSVM<T extends Instance> extends LibsvmModel<T> implements C
 	public static FactorLabel pos = new FactorLabel("pos");
 	public static FactorLabel neg = new FactorLabel("neg");
  
-	
+	/**
+	 * ctor with kernel function to use.
+	 * 
+	 * @param k_fun_ kernel function
+	 */
 	public OneClassSVM(KernelFunction<T> k_fun_)
 	{
 		super(k_fun_);
@@ -65,6 +69,11 @@ public class OneClassSVM<T extends Instance> extends LibsvmModel<T> implements C
 		libsvmdelegate.param.nu  = (Double) this.getParameter(NU).getCurrentValue();
 	}
 	
+	/**
+	 * set allowed values for parameter nu.
+	 * 
+	 * @param NUs
+	 */
 	public void setNu(Double... NUs)
 	{
 		nu = new Parameter<Double>(NU,NUs);
@@ -122,119 +131,5 @@ public class OneClassSVM<T extends Instance> extends LibsvmModel<T> implements C
 			preds.add(pred);
 		}
 		return preds;
-	}
-	
-	public static void main(String[] args) throws Exception
-	{
-		
-		/*
-		MLHelper.exportLIBSVM(train, "/tmp/iris.trn");
-		MLHelper.exportLIBSVM(test, "/tmp/iris.tst");
-		
-		m.train(train);
-		
-		List<Prediction> preds = m.predict(test);
-		
-		double sens = m.getQuality(preds);
-		
-		System.out.println("sens="+sens);
-		
-		preds = m.predict(train);
-		
-		sens = m.getQuality(preds);
-		
-		System.out.println("sens="+sens);
-		*/
-		
-		
-		/*
-		SelectedModel<PrimalInstance> sm = ModelValidation.ModelSelection(5, train, m);
-		
-		System.out.println("sens(CV)="+sm.qual);
-		
-		List<Prediction> preds = sm.model.predict(test);
-		double sens = m.getQuality(preds);
-		System.out.println("sens(test)="+sens);
-		*/
-		//double q = ModelValidation.randomizedExternalCV(0.8, 3, 10, 2204, data, m);
-		//System.out.println("q="+q);
-
-		Random rng = new Random(2204);
-		for(int i=0;i<10;i++)
-		{
-
-			DefaultInstanceContainer<PrimalInstance> sample = InstanceReader.readExt(new FileInputStream("/tmp/nrps.dat"), 1, true);
-
-			double gam = RBFKernel.estimateGamma(sample);
-
-			RBFKernel rbf = new RBFKernel();
-			rbf.setGamma(MLHelper.makeExpSequence(-10, 10, 1, gam));
-
-			OneClassSVM<PrimalInstance>  m  = new OneClassSVM<PrimalInstance>(rbf);
-
-			m.setNu(0.001,0.01,0.1);
-
-			sample.shuffle(rng);
-			
-			InstanceFilter<PrimalInstance> ala_filter = new InstanceFilter<PrimalInstance>(){
-				@Override
-				public boolean accept(PrimalInstance t)
-				{
-					// aad, ala, arg, asn, asp, bth, cys
-					return t.getLabel().toString().equals("ala");
-				}};
-
-				InstanceFilter<PrimalInstance> not_ala_filter = new InvertedFilter<PrimalInstance>(ala_filter);
-
-				FilteredDataView<PrimalInstance> pos = new FilteredDataView<PrimalInstance>();
-				pos.addFilter(ala_filter);
-				pos.addAll(sample);
-				pos.setLabelSupplier(new LabelSupplier(){
-					@Override
-					public Label getLabel(int idx)
-					{
-						return OneClassSVM.pos;
-					}});
-
-				FilteredDataView<PrimalInstance> neg = new FilteredDataView<PrimalInstance>();
-				neg.addFilter(not_ala_filter);
-				neg.addAll(sample);
-				neg.setLabelSupplier(new LabelSupplier(){
-					@Override
-					public Label getLabel(int idx)
-					{
-						return OneClassSVM.neg;
-					}});
-
-				ModelValidation.turnLoggingOff();
-				SelectedModel<PrimalInstance> sm = ModelValidation.ModelSelection(3, pos, m);
-
-
-
-				List<Prediction> neg_preds = sm.model.predict(neg);
-				for(Prediction p: neg_preds)
-				{
-					//System.out.println(p.getPredictedLabel()+" "+p.getTrueLabel());
-				}
-
-
-				QualityMeasure spec = new Specificity(OneClassSVM.pos);
-				//System.out.println(spec.getQuality(neg_preds));
-
-				List<Prediction> pos_preds = sm.model.predict(pos);
-				for(Prediction p: pos_preds)
-				{
-					//System.out.println(p.getPredictedLabel()+" "+p.getTrueLabel());
-				}
-
-				QualityMeasure prec_m = new Precision(OneClassSVM.pos);
-				QualityMeasure sens_m = new Sensitivity(OneClassSVM.pos);
-				double prec = prec_m.getQuality(pos_preds);
-				double sens = sens_m.getQuality(pos_preds);
-				double f    = 2.0*(prec*sens)/(prec+sens);
-				System.out.println(prec+" "+sens+" "+f);
-				//System.out.println(sens);
-				//System.out.println();
-		}
 	}
 }
