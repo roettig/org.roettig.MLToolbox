@@ -10,6 +10,8 @@ import org.roettig.MLToolbox.base.Prediction;
 
 
 /**
+ * The AccuracyMeasure class gives the accuracy of predictions.
+ *
  * @author roettig
  *
  */
@@ -24,11 +26,9 @@ public class AccuracyMeasure implements QualityMeasure, Serializable
 		int  N   = predictions.size(); 
 		for(Prediction pred: predictions)
 		{
-			//System.out.println(pred.getPredictedLabel()+" "+pred.getTrueLabel());
 			if(!pred.getPredictedLabel().equals(pred.getTrueLabel()))
 				err++;
 		}
 		return (1.0-((err*1.0)/N));
 	}
-
 }

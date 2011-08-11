@@ -9,16 +9,26 @@ import org.roettig.MLToolbox.base.label.FactorLabel;
 import org.roettig.MLToolbox.base.label.Label;
 import org.roettig.maths.statistics.Statistics;
 
+/**
+ * The FMeasure class gives the Fmeasure (harmonic mean of precision and recall) of predictions.
+ *
+ * @author roettig
+ *
+ */
 public class FMeasure implements QualityMeasure
 {
 
 	private FactorLabel pos_label;
 	
 	public FMeasure()
-	{
-		
+	{	
 	}
 	
+	/**
+	 * ctor which specifies the label to be used for the positive class.
+	 * 
+	 * @param pos_label
+	 */
 	public FMeasure(FactorLabel pos_label)
 	{
 		this.pos_label = pos_label;

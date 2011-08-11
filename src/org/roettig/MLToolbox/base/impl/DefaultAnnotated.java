@@ -7,15 +7,19 @@ import java.util.Map;
 
 import org.roettig.MLToolbox.base.Annotated;
 
-
+/**
+ * Default implementation of the Annotated interface.
+ * 
+ * @author roettig
+ *
+ */
 public class DefaultAnnotated implements Annotated
 {
 
 	private Map<String,Object> data = new HashMap<String,Object>();
 	
 	public DefaultAnnotated()
-	{
-		
+	{	
 	}
 	
 	@Override

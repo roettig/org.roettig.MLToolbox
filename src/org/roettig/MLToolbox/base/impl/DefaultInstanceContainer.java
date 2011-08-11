@@ -14,6 +14,14 @@ import org.roettig.MLToolbox.base.instance.PrimalInstance;
 import org.roettig.MLToolbox.base.label.FactorLabel;
 import org.roettig.MLToolbox.base.label.Label;
 
+/**
+ * Default implementation of the InstanceContainer interface.
+ * 
+ * @author roettig
+ *
+ * @param <T> type parameter of instance
+ * 
+ */
 public class DefaultInstanceContainer<T extends Instance> implements InstanceContainer<T>
 {
 	private List<T> data = new ArrayList<T>();
@@ -36,11 +44,13 @@ public class DefaultInstanceContainer<T extends Instance> implements InstanceCon
 		}		
 	}
 	
+	@Override
 	public void add(T t)
 	{
 		data.add(t);
 	}
 	
+	@Override
 	public void clear()
 	{
 		this.data.clear();
@@ -52,41 +62,12 @@ public class DefaultInstanceContainer<T extends Instance> implements InstanceCon
 		return this.data.iterator();
 	}
 	
+	@Override
 	public void shuffle(Random rng)
 	{
 		Collections.shuffle(data, rng);
 	}
 	
-	public static void main(String[] args)
-	{
-		Label lab1 = new FactorLabel("class1");
-
-		
-		double[] fts1 = new double[]{1.0,2.0};		
-		
-		PrimalInstance pi1 = new PrimalInstance(lab1,fts1);
-		PrimalInstance pi2 = new PrimalInstance(lab1,fts1);
-		PrimalInstance pi3 = new PrimalInstance(lab1,fts1);
-		PrimalInstance pi4 = new PrimalInstance(lab1,fts1);
-		PrimalInstance pi5 = new PrimalInstance(lab1,fts1);
-		
-		List<PrimalInstance> data = new ArrayList<PrimalInstance>();
-		data.add(pi1);
-		data.add(pi2);
-		data.add(pi3);
-		data.add(pi4);
-		data.add(pi5);
-		
-
-		
-		DefaultInstanceContainer<PrimalInstance> iv = new DefaultInstanceContainer<PrimalInstance>(data);
-		
-		for(PrimalInstance pi: iv)
-		{
-			System.out.println(pi.getId());
-		}
-	}
-
 	@Override
 	public T get(int idx)
 	{
@@ -110,6 +91,7 @@ public class DefaultInstanceContainer<T extends Instance> implements InstanceCon
 		this.lab_suppl = lab_suppl;
 	}
 	
+	@Override
 	public void dump()
 	{
 		for(Instance i: this.data)

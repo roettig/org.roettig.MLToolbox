@@ -9,6 +9,12 @@ import org.roettig.MLToolbox.base.label.FactorLabel;
 import org.roettig.MLToolbox.base.label.Label;
 import org.roettig.maths.statistics.Statistics;
 
+/**
+ * The Sensitivity class gives the Sensitivity (true positive rate) of predictions.
+ *
+ * @author roettig
+ *
+ */
 public class Sensitivity implements QualityMeasure
 {
 
@@ -19,6 +25,11 @@ public class Sensitivity implements QualityMeasure
 		
 	}
 	
+	/**
+	 * ctor which specifies the label to be used for the positive class.
+	 * 
+	 * @param pos_label
+	 */
 	public Sensitivity(FactorLabel pos_label)
 	{
 		this.pos_label = pos_label;

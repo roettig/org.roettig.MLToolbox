@@ -29,19 +29,39 @@ import org.roettig.MLToolbox.util.SerialClone;
 
 public class ModelValidation
 {
-	
 	private static Logger logger = Logger.getLogger(ModelValidation.class.getCanonicalName());
-	
+
+	/**
+	 * turns off log-messages during validation operations.
+	 */
 	public static void turnLoggingOff()
 	{
 		logger.setLevel(Level.OFF);
 	}
-	
+
+	/**
+	 * turns on log-messages during validation operations.
+	 */
 	public static void turnLoggingOn()
 	{
 		logger.setLevel(Level.INFO);
 	}	
-	
+
+	/**
+	 * 
+	 * conducts a simple nested cross-validation with <i>nOF</i> outer folds
+	 * and <i>nIF</i> inner folds on the instances given by <i>samples</i>.
+	 * The model to operate on is given by <i>m</i>.
+	 * 
+	 * @param nOF
+	 * @param nIF
+	 * @param samples
+	 * @param m
+	 * 
+	 * @return SelectedModel
+	 *  
+	 * @throws Exception
+	 */
 	public static <T extends Instance> SelectedModel<T> SimpleNestedCV( int nOF, int nIF, InstanceContainer<T> samples, Model<T> m) throws Exception
 	{
 		return SimpleNestedCV( nOF, nIF, samples, m, 0);
@@ -51,13 +71,13 @@ public class ModelValidation
 	 * 
 	 * conducts a simple nested cross-validation with <i>nOF</i> outer folds
 	 * and <i>nIF</i> inner folds on the instances given by <i>samples</i>.
-	 * The model to operate on is given by <i>m</i> and the hyperparameters
-	 * to conduct a grid search on are given by <i>params</i>.
+	 * The model to operate on is given by <i>m</i>. The seed will be forwarded
+	 * to the source of randomness (i.e. Random).
+	 * 
 	 * @param nOF
 	 * @param nIF
 	 * @param samples
 	 * @param m
-	 * @param params
 	 * @param seed
 	 * 
 	 * @return SelectedModel
@@ -185,12 +205,13 @@ public class ModelValidation
 	}
 	
 	/**
-	 * simple cross-validation routine with <i>nFolds</i> number of folds.
+	 * simple cross-validation.
 	 * 
-	 * @param nFolds
-	 * @param samples
-	 * @param m
-	 *
+	 * @param nFolds number of folds
+	 * @param samples input data
+	 * @param m model to use
+	 * @param preds predictions from CV
+	 * @return
 	 * @throws Exception
 	 */
 	public static <T extends Instance> double CV(int nFolds, InstanceContainer<T> samples, Model<T> m, List<Prediction> preds) throws Exception
@@ -314,11 +335,11 @@ public class ModelValidation
 	/**
 	 * gives the <i>f</i>-th stratified fold 
 	 * 
-	 * @param f
-	 * @param F 
-	 * @param samples
-	 * @param train
-	 * @param test 
+	 * @param f fold index
+	 * @param F total number of folds
+	 * @param samples 
+	 * @param train training fold data
+	 * @param test  test fold data
 	 *
 	 * @throws Exception
 	 */
@@ -451,6 +472,17 @@ public class ModelValidation
 		}
 	}
 
+	/**
+	 * gives a stratified split into sets of size frac*N and (1-frac)*N 
+	 * 
+	 * @param frac fraction to split
+	 * @param samples
+	 * @param train
+	 * @param test 
+	 * @param rng source of randomness
+	 *  
+	 * @throws Exception
+	 */
 	public static <T extends Instance> void getStratifiedRandomSplit(double frac, InstanceContainer<T> samples, InstanceContainer<T> train, InstanceContainer<T> test, Random rng)
 	{
 		Map< Label, List<T> > pooledSamples = new HashMap< Label, List<T> >();
@@ -607,7 +639,7 @@ public class ModelValidation
 	}
 	
 	/**
-	 * does ModelSelection using CV with <i>F</i> folds to select
+	 * does model selection using CV with <i>F</i> folds to select
 	 * the best model trying all combinations of hyperparameters.
 	 * 
 	 * @param F

@@ -9,6 +9,12 @@ import org.roettig.MLToolbox.base.label.FactorLabel;
 import org.roettig.MLToolbox.base.label.Label;
 import org.roettig.maths.statistics.Statistics;
 
+/**
+ * The Precision class gives the Precision of predictions.
+ *
+ * @author roettig
+ *
+ */
 public class Precision implements QualityMeasure
 {
 
@@ -19,6 +25,11 @@ public class Precision implements QualityMeasure
 		
 	}
 	
+	/**
+	 * ctor which specifies the label to be used for the positive class.
+	 * 
+	 * @param pos_label
+	 */
 	public Precision(FactorLabel pos_label)
 	{
 		this.pos_label = pos_label;

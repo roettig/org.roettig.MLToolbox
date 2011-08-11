@@ -9,6 +9,12 @@ import org.roettig.MLToolbox.base.label.FactorLabel;
 import org.roettig.MLToolbox.base.label.Label;
 import org.roettig.maths.statistics.Statistics;
 
+/**
+ * The GMeasure class gives the Gmeasure (mean of sensitivity and specificity) of predictions.
+ *
+ * @author roettig
+ *
+ */
 public class GMeasure implements QualityMeasure
 {
 
@@ -19,6 +25,11 @@ public class GMeasure implements QualityMeasure
 		
 	}
 	
+	/**
+	 * ctor which specifies the label to be used for the positive class.
+	 * 
+	 * @param pos_label
+	 */
 	public GMeasure(FactorLabel pos_label)
 	{
 		this.pos_label = pos_label;

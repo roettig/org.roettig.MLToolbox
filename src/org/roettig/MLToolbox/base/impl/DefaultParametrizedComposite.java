@@ -10,6 +10,12 @@ import org.roettig.MLToolbox.base.parameter.Parameter;
 import org.roettig.MLToolbox.base.parameter.Parametrized;
 import org.roettig.MLToolbox.base.parameter.ParametrizedComposite;
 
+/**
+ * Default implementation of the interface ParametrizedComposite.
+ * 
+ * @author roettig
+ *
+ */
 public class DefaultParametrizedComposite implements ParametrizedComposite, Serializable
 {
 

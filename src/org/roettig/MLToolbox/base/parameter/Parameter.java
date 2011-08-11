@@ -4,6 +4,13 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The Parameter class represents adjustable parameters within the MLToolbox.
+ *  
+ * @author roettig
+ *
+ * @param <T> type of the encapsulated parameter (i.e. Double, ...)
+ */
 public class Parameter<T> implements Cloneable, Serializable
 {
 
@@ -51,16 +58,33 @@ public class Parameter<T> implements Cloneable, Serializable
 		}
 	}
 
+	/**
+	 * get k-th allowed value.
+	 * 
+	 * @param k
+	 * 
+	 * @return value
+	 */
 	public T getValue(int k)
 	{
 		return values.get(k);
 	}
 
+	/**
+	 * get current set value.
+	 * 
+	 * @return current value
+	 */
 	public T getCurrentValue()
 	{
 		return values.get(currValueIdx);
 	}
 
+	/**
+	 * set current value to next allowed value.
+	 * 
+	 * @return next value
+	 */
 	public T getNextValue()
 	{
 		currValueIdx++;
@@ -69,27 +93,44 @@ public class Parameter<T> implements Cloneable, Serializable
 		return getCurrentValue();
 	}
 
+	/**
+	 * get number of allowed values.
+	 * 
+	 * @return number fo allowed values
+	 */
 	public int getSize()
 	{
 		return values.size();
 	}
 
-	public void setCurrentValue(int idx)
+	/**
+	 * set current value to i-th allowed value.
+	 *  
+	 * @param i 
+	 */
+	public void setCurrentValue(int i)
 	{
-		currValueIdx = idx;
+		currValueIdx = i;
 	}
 
+	/**
+	 * returns the name of the parameter.
+	 * 
+	 * @return name
+	 */
 	public String getName()
 	{
 		return name;
 	}
 	
+	/**
+	 * returns String representation of parameter.
+	 */
 	public String toString()
 	{
 		String ret = String.format("parameter [%s] values: ", this.getName());
 		for(T val: values)
 			ret += val+",";
 		return ret.substring(0,ret.length()-1);
-			
 	}
 }

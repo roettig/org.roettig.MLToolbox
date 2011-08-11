@@ -7,6 +7,14 @@ import java.util.List;
 import org.roettig.MLToolbox.base.Prediction;
 import org.roettig.maths.statistics.Statistics;
 
+/**
+ * The PearsonMeasure class gives the Pearson Correlation Coefficient of predictions.
+ *
+ * Note: This is a quality measure for regression.
+ * 
+ * @author roettig
+ *
+ */
 public class PearsonMeasure implements QualityMeasure
 {
 

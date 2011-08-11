@@ -10,6 +10,12 @@ import org.roettig.MLToolbox.base.label.Label;
 import org.roettig.maths.statistics.Statistics;
 import org.roettig.maths.statistics.Statistics.ConfusionMatrix;
 
+/**
+ * The MCC class gives the Matthews Correlation Coefficient of predictions.
+ *
+ * @author roettig
+ *
+ */
 public class MCC implements QualityMeasure
 {
 
@@ -20,6 +26,11 @@ public class MCC implements QualityMeasure
 		
 	}
 	
+	/**
+	 * ctor which specifies the label to be used for the positive class.
+	 * 
+	 * @param pos_label
+	 */
 	public MCC(FactorLabel pos_label)
 	{
 		this.pos_label = pos_label;

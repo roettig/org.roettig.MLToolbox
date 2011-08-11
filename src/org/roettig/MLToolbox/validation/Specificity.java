@@ -9,6 +9,12 @@ import org.roettig.MLToolbox.base.label.FactorLabel;
 import org.roettig.MLToolbox.base.label.Label;
 import org.roettig.maths.statistics.Statistics;
 
+/**
+ * The Specificity class gives the Specificity (true negative rate) of predictions.
+ *
+ * @author roettig
+ *
+ */
 public class Specificity implements QualityMeasure
 {
 
@@ -19,6 +25,11 @@ public class Specificity implements QualityMeasure
 		
 	}
 	
+	/**
+	 * ctor which specifies the label to be used for the positive class.
+	 * 
+	 * @param pos_label
+	 */
 	public Specificity(FactorLabel pos_label)
 	{
 		this.pos_label = pos_label;
