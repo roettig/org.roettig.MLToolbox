@@ -2,6 +2,12 @@ package org.roettig.MLToolbox.kernels;
 
 import org.roettig.MLToolbox.base.instance.PrimalInstance;
 
+/**
+ * The LinearKernel computes the dot product between two primal instances.
+ * 
+ * @author roettig
+ *
+ */
 public class LinearKernel extends KernelFunction<PrimalInstance>
 {
 	private static final long	serialVersionUID	= -8210757784279622459L;

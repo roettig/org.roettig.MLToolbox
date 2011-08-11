@@ -1,6 +1,11 @@
 package org.roettig.MLToolbox.base.label;
 
-
+/**
+ * NumericLabel is used for regression tasks.
+ * 
+ * @author roettig
+ *
+ */
 public final class NumericLabel extends Label
 {
 	private final double value;
@@ -43,6 +48,4 @@ public final class NumericLabel extends Label
 	{
 		return value;
 	}
-	
-	
 }

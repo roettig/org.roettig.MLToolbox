@@ -24,7 +24,6 @@ import org.roettig.MLToolbox.base.instance.InstanceFilter;
 import org.roettig.MLToolbox.base.instance.PrimalInstance;
 import org.roettig.MLToolbox.base.label.FactorLabel;
 import org.roettig.MLToolbox.base.label.Label;
-import org.roettig.MLToolbox.base.label.LabelFactory;
 import org.roettig.MLToolbox.base.label.NumericLabel;
 
 public class InstanceReader

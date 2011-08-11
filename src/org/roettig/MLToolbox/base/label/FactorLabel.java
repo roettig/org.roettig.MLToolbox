@@ -4,7 +4,12 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-
+/**
+ * FactorLabel is used for classification tasks.
+ * 
+ * @author roettig
+ *
+ */
 public class FactorLabel extends Label
 {
 	
@@ -15,11 +20,22 @@ public class FactorLabel extends Label
 	private boolean freelabel = false;
 	private double  val;
 	
+	/**
+	 * returns for a given numerical value the corresponding label.
+	 * 
+	 * @param d numerical value
+	 * 
+	 * @return label
+	 *
+	 */
 	public static Label fromDoubleValue(double d)
 	{
 		return double_to_label.get(d);
 	}
 	
+	/**
+	 * returns the numerical value of the label
+	 */
 	public double getDoubleValue()
 	{
 		if(freelabel)
@@ -28,16 +44,35 @@ public class FactorLabel extends Label
 			return classnames_to_double.get(getClassname());
 	}
 	
+	/**
+	 * factory method to create an unlabeled label.
+	 * 
+	 * @return label
+	 */
 	public static FactorLabel makeUnlabeled()
 	{
 		return new FactorLabel(null);
 	}
 	
+	/**
+	 * returns whether this label represents a unlabeled one.
+	 * 
+	 * @return unlabeled flag
+	 */
 	public boolean isUnlabeled()
 	{
 		return this.classname==null;
 	}
 		
+	/**
+	 * construct label from classname and numerical value.
+	 * 
+	 * <br/>
+	 * 
+	 * Note: This will become a free label, i.e. will not be administered statically by Label. 
+	 * 
+	 * @param classname
+	 */
 	public FactorLabel(String classname, double val)
 	{
 		freelabel = true;
@@ -45,6 +80,15 @@ public class FactorLabel extends Label
 		this.val = val;
 	}
 	
+	/**
+	 * construct label from classname.
+	 * 
+	 * <br/>
+	 * 
+	 * Note: This label will be administered statically by Label class.
+	 * 
+	 * @param classname
+	 */
 	public FactorLabel(String classname)
 	{
 		this.classname = classname;
@@ -64,6 +108,9 @@ public class FactorLabel extends Label
 		}
 	}
 	
+	/**
+	 * return String represenation of this label.
+	 */
 	public String toString()
 	{
 		return String.format("%s",classname);
@@ -94,6 +141,11 @@ public class FactorLabel extends Label
 		return true;
 	}
 	
+	/**
+	 * returns the classname of this label.
+	 * 
+	 * @return classname
+	 */
 	public String getClassname()
 	{
 		return classname;

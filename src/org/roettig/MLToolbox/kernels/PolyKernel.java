@@ -3,6 +3,12 @@ package org.roettig.MLToolbox.kernels;
 import org.roettig.MLToolbox.base.instance.PrimalInstance;
 import org.roettig.MLToolbox.base.parameter.Parameter;
 
+/**
+ * The LinearKernel computes the dot product raised to the power of <i>d</i> between two primal instances.
+ * 
+ * @author roettig
+ *
+ */
 public class PolyKernel extends KernelFunction<PrimalInstance>
 {
 
@@ -14,7 +20,11 @@ public class PolyKernel extends KernelFunction<PrimalInstance>
 		this.registerParameter(DEGREE, D);
 	}
 	
-	public void setDegrees(Integer... degrees)
+	/**
+	 * sets the allowed values for the degree value.
+	 * @param degrees
+	 */
+	public void setDegree(Integer... degrees)
 	{
 		Parameter<Integer> D = new Parameter<Integer>(DEGREE,degrees);
 		this.registerParameter(D.getName(), D);

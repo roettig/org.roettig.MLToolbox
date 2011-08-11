@@ -5,14 +5,12 @@ import java.io.Serializable;
 import org.roettig.MLToolbox.base.impl.DefaultParametrizedComposite;
 import org.roettig.MLToolbox.base.instance.Instance;
 
-
 /**
- * 
+ * The KernelFunction class is the abstract base class for
+ * all kernel functions defined on instances within MLToolbox.
  * @author roettig
  *
- * The KernelFunction class is the abstract base class for
- * all kernel functions defined on instances within ML4.
- * 
+ * @param <T> type parameter of instance
  */
 public abstract class KernelFunction<T extends Instance> extends DefaultParametrizedComposite implements Serializable
 {
@@ -45,11 +43,21 @@ public abstract class KernelFunction<T extends Instance> extends DefaultParametr
 	
 	private boolean normalize = true;
 	
+	/**
+	 * activate computation of normalized kernel function values.
+	 * 
+	 * @param flag
+	 */
 	public void doNormalize(boolean flag) 
 	{
 		normalize = flag;
 	}
 	
+	/**
+	 * are kernel values normalized.
+	 * 
+	 * @return flag
+	 */
 	public boolean isNormalized()
 	{
 		return normalize;

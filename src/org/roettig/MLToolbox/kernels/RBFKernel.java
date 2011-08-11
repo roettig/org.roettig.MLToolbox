@@ -4,6 +4,11 @@ import org.roettig.MLToolbox.base.instance.InstanceContainer;
 import org.roettig.MLToolbox.base.instance.PrimalInstance;
 import org.roettig.MLToolbox.base.parameter.Parameter;
 
+/**
+ * this class implements the RBFKernel with parameter <i>gamma</i>. 
+ * @author roettig
+ *
+ */
 public class RBFKernel extends KernelFunction<PrimalInstance>
 {
 	private static final long serialVersionUID = -3724412740817065414L;
@@ -16,6 +21,11 @@ public class RBFKernel extends KernelFunction<PrimalInstance>
 		this.registerParameter(GAMMA, C);
 	}
 	
+	/**
+	 * sets the allowed values for the parameter gamma.
+	 * 
+	 * @param gammas
+	 */
 	public void setGamma(Double... gammas)
 	{
 		Parameter<Double> C = new Parameter<Double>(GAMMA,gammas);
@@ -53,6 +63,12 @@ public class RBFKernel extends KernelFunction<PrimalInstance>
     	return Math.exp( -gamma*d );
 	}
 	
+	/**
+	 * estimate a sensible initial value for the parameter gamma. 
+	 * 
+	 * @param data
+	 * @return initial estimate
+	 */
 	public static double estimateGamma(InstanceContainer<PrimalInstance> data)
 	{
 		double g=0.0;
