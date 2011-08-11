@@ -8,7 +8,7 @@ import org.roettig.MLToolbox.base.label.Label;
 
 
 /**
- * Abstract base class of all Instances within the ML4 framework.   
+ * Abstract base class of all Instances within the MLToolbox.   
  *   
 */
 public abstract class Instance implements Annotated, Cloneable
@@ -26,14 +26,30 @@ public abstract class Instance implements Annotated, Cloneable
 		this.props = new DefaultAnnotated();
 	}
 	
+	/**
+	 * returns a copy of the instance with newly assigned label.
+	 * 
+	 * @param lab
+	 * 
+	 * @return instance
+	 */
 	public abstract Instance reassign(Label lab);
 	
-		
+	/**
+	 * returns the label of the instance.
+	 * 
+	 * @return label
+	 */
 	public Label getLabel()
 	{
 		return label;
 	}	
 	
+	/**
+	 * returns a unique identifier of the instance.
+	 * 
+	 * @return id
+	 */
 	public long getId()
 	{
 		return id;
