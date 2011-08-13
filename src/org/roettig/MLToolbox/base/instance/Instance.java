@@ -1,5 +1,6 @@
 package org.roettig.MLToolbox.base.instance;
 
+import java.io.Serializable;
 import java.util.List;
 
 import org.roettig.MLToolbox.base.Annotated;
@@ -11,7 +12,7 @@ import org.roettig.MLToolbox.base.label.Label;
  * Abstract base class of all Instances within the MLToolbox.   
  *   
 */
-public abstract class Instance implements Annotated, Cloneable
+public abstract class Instance implements Annotated, Cloneable, Serializable
 {
 	private final Label label;
 	private final long  id;

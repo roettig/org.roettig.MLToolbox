@@ -1,6 +1,10 @@
 package org.roettig.MLToolbox.model;
 
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.List;
 import org.roettig.MLToolbox.base.Prediction;
 import org.roettig.MLToolbox.base.impl.DefaultParametrizedComposite;
@@ -58,5 +62,28 @@ public abstract class Model<T extends Instance> extends DefaultParametrizedCompo
 
 	protected QualityMeasure qm;
 	
-	protected transient InstanceContainer<T> trainingdata;
+	protected InstanceContainer<T> trainingdata;
+	
+	public void store(String filename) throws Exception
+	{
+		FileOutputStream f_out = new FileOutputStream(filename);
+		// Write object with ObjectOutputStream
+		ObjectOutputStream obj_out = new ObjectOutputStream (f_out);
+		// Write object out to disk
+		obj_out.writeObject( this );
+		f_out.close();
+	}
+
+	public static Model<?> load(String filename) throws Exception
+	{
+		// restore object from file ...
+		// Read from disk using FileInputStream
+		FileInputStream f_in = new FileInputStream(filename);
+
+		// Read object using ObjectInputStream
+		ObjectInputStream obj_in = new ObjectInputStream (f_in);
+		Model<?> ret = (Model<?>) obj_in.readObject();
+		f_in.close();
+		return ret;
+	}
 }

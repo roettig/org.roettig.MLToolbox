@@ -28,11 +28,19 @@ public class DefaultInstanceContainer<T extends Instance> implements InstanceCon
 	private List<T> unlab_data = new ArrayList<T>();
 	private LabelSupplier lab_suppl;
 	
+	/**
+	 * creates an empty instance container.
+	 */
 	public DefaultInstanceContainer()
 	{
 		this.data = new ArrayList<T>();
 	}
 	
+	/**
+	 * creates an instance container holding the supplied instances.
+	 * 
+	 * @param data
+	 */
 	public DefaultInstanceContainer(Collection<T> data)
 	{
 		this();

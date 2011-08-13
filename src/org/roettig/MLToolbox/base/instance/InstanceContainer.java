@@ -1,5 +1,6 @@
 package org.roettig.MLToolbox.base.instance;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Random;
 
@@ -15,7 +16,7 @@ import java.util.Random;
  *
  * @param <T> generic type of instances stored 
  */
-public interface InstanceContainer<T extends Instance> extends Iterable<T>
+public interface InstanceContainer<T extends Instance> extends Iterable<T>, Serializable
 {
 	/**
 	 * add an instance to the container.
@@ -40,6 +41,10 @@ public interface InstanceContainer<T extends Instance> extends Iterable<T>
 	 */
 	public int size();
 	
+	/**
+	 * remove all instances from this container.
+	 */
+	public void clear();
 	
 	public LabelSupplier getLabelSupplier();
 	void setLabelSupplier(LabelSupplier lab_suppl);

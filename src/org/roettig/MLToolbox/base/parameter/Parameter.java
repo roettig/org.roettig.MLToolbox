@@ -7,8 +7,17 @@ import java.util.List;
 /**
  * The Parameter class represents adjustable parameters within the MLToolbox.
  *  
- * @author roettig
- *
+ * <pre>
+ * {@code
+ * // parameter C1 will hold one value of 1.0
+ * Parameter<Double> C1 = new Parameter<Double>("C1",new Double[]{1.0});
+ * 
+ * // parameter C2 will hold several allowed values 1.0,10.0,100.0
+ * Parameter<Double> C2 = new Parameter<Double>("C2",new Double[]{1.0,10.0,100.0});
+ * 
+ * }
+ * </pre>
+ * 
  * @param <T> type of the encapsulated parameter (i.e. Double, ...)
  */
 public class Parameter<T> implements Cloneable, Serializable

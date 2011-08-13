@@ -110,4 +110,10 @@ public class FilteredDataView<T extends Instance> implements InstanceContainer<T
 	{
 		return unlab_data;
 	}
+
+	@Override
+	public void clear()
+	{
+		// NOP
+	}
 }

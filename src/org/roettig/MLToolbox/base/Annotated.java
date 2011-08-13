@@ -1,5 +1,6 @@
 package org.roettig.MLToolbox.base;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -13,7 +14,7 @@ import java.util.List;
  *       to a DefaultAnnotated object.
  * 
  */
-public interface Annotated
+public interface Annotated extends Serializable
 {
 	/**
 	 * adds the property object <i>obj</i> with the String <i>name</i> as key

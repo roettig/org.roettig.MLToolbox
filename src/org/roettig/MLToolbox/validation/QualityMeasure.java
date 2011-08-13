@@ -3,6 +3,7 @@
  */
 package org.roettig.MLToolbox.validation;
 
+import java.io.Serializable;
 import java.util.Collection;
 
 import org.roettig.MLToolbox.base.Prediction;
@@ -15,7 +16,7 @@ import org.roettig.MLToolbox.base.Prediction;
  * @author roettig
  *
  */
-public interface QualityMeasure
+public interface QualityMeasure extends Serializable
 {
 	/**
 	 * calculates the quality of prediction on a collection of predictions (the higher the better).

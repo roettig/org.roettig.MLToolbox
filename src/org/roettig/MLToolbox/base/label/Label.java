@@ -1,12 +1,14 @@
 package org.roettig.MLToolbox.base.label;
 
+import java.io.Serializable;
+
 /**
  * Abstract base class for all labels within the MLToolbox.
  * 
  * @author roettig
  *
  */
-public abstract class Label
+public abstract class Label implements Serializable
 {
 	/**
 	 * return the numerical representation of this label, since
