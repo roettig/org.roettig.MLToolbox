@@ -1,5 +1,8 @@
 package org.roettig.MLToolbox.base;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import org.roettig.MLToolbox.base.instance.Instance;
 import org.roettig.MLToolbox.base.label.Label;
 
@@ -52,4 +55,15 @@ public class Prediction
 	{
 		return yp;
 	}	
+	
+	public static void split(Collection<Prediction> in, Collection<Label> yt, Collection<Label> yp)
+	{
+		yt = new ArrayList<Label>();
+		yp = new ArrayList<Label>();
+		for(Prediction p: in)
+		{
+			yt.add(p.getTrueLabel());
+			yp.add(p.getPredictedLabel());
+		}
+	}
 }
