@@ -59,6 +59,16 @@ public abstract class Model<T extends Instance> extends DefaultParametrizedCompo
 	{
 		this.qm = qm;
 	}
+	
+	/**
+	 * returns current quality measure.
+	 * 
+	 * @return quality measure
+	 */
+	public QualityMeasure getQualityMeasure()
+	{
+		return this.qm;
+	}
 
 	protected QualityMeasure qm;
 	
