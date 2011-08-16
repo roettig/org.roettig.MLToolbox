@@ -704,6 +704,32 @@ public class ModelValidation
 		return new SelectedModel<T>(m,maxQual);
 	}
 
+	public static <T extends Instance> InstanceContainer<T> binarySubset(InstanceContainer<T> samples, Label keep_1, Label keep_2, Label pos, Label neg)
+	{
+		InstanceContainer<T> ret = new DefaultInstanceContainer<T>();
+		for(T i: samples)
+		{
+			
+			if(i.getLabel().equals(keep_1))
+			{
+				T inst = (T) i.reassign(pos);
+				ret.add(inst);
+			}
+			if(i.getLabel().equals(keep_2))
+			{
+				T inst = (T) i.reassign(neg);
+				ret.add(inst);				
+			}
+			if(((FactorLabel)i.getLabel()).isUnlabeled())
+			{
+				T inst = (T) i.reassign(i.getLabel());
+				ret.add(inst);				
+			}
+
+		}
+		return ret;
+	}
+	
 	/**
 	 * divides the input into two subsets (discriminator,!discriminator) and labels the first one with label pos and the second one with label neg.
 	 * 
