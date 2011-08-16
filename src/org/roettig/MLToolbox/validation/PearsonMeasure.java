@@ -28,7 +28,13 @@ public class PearsonMeasure implements QualityMeasure
 			yt.add(pred.getTrueLabel().getDoubleValue());
 			yp.add(pred.getPredictedLabel().getDoubleValue());
 		}
-		return Statistics.pearsonCorr(yt, yp);
+		
+		double corr =  Statistics.pearsonCorr(yt, yp);
+		
+		if(Double.isNaN(corr))
+			corr = 0.0;
+		
+		return corr;
 	}
 
 }
