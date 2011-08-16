@@ -58,8 +58,6 @@ public class Prediction
 	
 	public static void split(Collection<Prediction> in, Collection<Label> yt, Collection<Label> yp)
 	{
-		yt = new ArrayList<Label>();
-		yp = new ArrayList<Label>();
 		for(Prediction p: in)
 		{
 			yt.add(p.getTrueLabel());
