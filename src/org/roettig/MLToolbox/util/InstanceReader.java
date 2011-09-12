@@ -3,6 +3,7 @@ package org.roettig.MLToolbox.util;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,14 +19,18 @@ import java.util.Set;
 import java.util.Vector;
 
 import org.roettig.MLToolbox.base.impl.DefaultInstanceContainer;
-import org.roettig.MLToolbox.base.instance.FilteredDataView;
 import org.roettig.MLToolbox.base.instance.InstanceContainer;
-import org.roettig.MLToolbox.base.instance.InstanceFilter;
 import org.roettig.MLToolbox.base.instance.PrimalInstance;
 import org.roettig.MLToolbox.base.label.FactorLabel;
 import org.roettig.MLToolbox.base.label.Label;
 import org.roettig.MLToolbox.base.label.NumericLabel;
 
+/**
+ * The class InstanceReader provides helper methods for reading data files.
+ * 
+ * @author roettig
+ *
+ */
 public class InstanceReader
 {
 	
@@ -54,13 +59,20 @@ public class InstanceReader
 		out.close();
 	}
 	
+	
+	public static void main(String[] args) throws FileNotFoundException, Exception
+	{
+		DefaultInstanceContainer<PrimalInstance> data = readExt(new FileInputStream("/tmp/test.dat"),1,true);
+		System.out.println(data.get(0).getNumberOfFeatures());
+		System.out.println(data.get(0).getFeatures()[0]);
+		System.out.println(data.get(0).getFeatures()[1]);
+	}
+	
 	public static DefaultInstanceContainer<PrimalInstance> readExt(InputStream input, int labelColumn, boolean factor) throws Exception
 	{
 		labelColumn--;
 		
 		DefaultInstanceContainer<PrimalInstance> ret = new DefaultInstanceContainer<PrimalInstance>();
-		
-		//Vector< Vector<Double> > data = new Vector< Vector<Double> >();
 		
 		BufferedReader bin = new BufferedReader(new InputStreamReader(input));
 		
@@ -76,12 +88,14 @@ public class InstanceReader
 		double cnum = 1.0;
 		int    max_ft_idx = -1;
 		String line=null;
+		
 		while((line=bin.readLine())!=null)
 		{
 			line = line.trim();
 			String toks[] = line.split("#");
 			String fts   = toks[0].trim();
 			String props = null;
+			
 			if(toks.length>1)
 				props = toks[1].trim();	
 			
@@ -230,6 +244,16 @@ public class InstanceReader
 		return ret;
 	}
 	
+	/**
+	 * load primal instances from text file with feature values whitespace-separated.
+	 * 
+	 * @param input input stream
+	 * @param labelColumn column where labels are stored
+	 * @param factor are labels factorial or numerical
+	 * 
+	 * @return instance container
+	 * @throws IOException
+	 */
 	public static DefaultInstanceContainer<PrimalInstance> read(InputStream input, int labelColumn, boolean factor) throws IOException
 	{
 		labelColumn--;
@@ -301,26 +325,5 @@ public class InstanceReader
 			idx++;
 		}
 		return ret;
-	}
-	
-	public static void main(String[] args) throws Exception
-	{
-
-		DefaultInstanceContainer<PrimalInstance> data = readExt(new FileInputStream("/tmp/nrps.dat"), 1, true);
-		
-		for(PrimalInstance pi: data)
-		{
-			System.out.println(pi.getLabel().toString());
-		}
-		
-		FilteredDataView<PrimalInstance> view = new FilteredDataView<PrimalInstance>();
-		view.addFilter(new InstanceFilter<PrimalInstance>(){
-			@Override
-			public boolean accept(PrimalInstance t)
-			{
-				return t.getLabel().toString().equals("ala");
-			}});
-		view.addAll(data);
-		writeExt(view, "/tmp/ala.ext");
 	}
 }
