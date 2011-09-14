@@ -1,6 +1,5 @@
 package org.roettig.MLToolbox.test.base;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -9,7 +8,9 @@ import junit.framework.TestCase;
 
 import org.roettig.MLToolbox.base.Prediction;
 import org.roettig.MLToolbox.base.impl.DefaultInstanceContainer;
+import org.roettig.MLToolbox.base.instance.InstanceContainer;
 import org.roettig.MLToolbox.base.instance.PrimalInstance;
+import org.roettig.MLToolbox.base.label.FactorLabel;
 import org.roettig.MLToolbox.kernels.LinearKernel;
 import org.roettig.MLToolbox.kernels.RBFKernel;
 import org.roettig.MLToolbox.model.CSVCModel;
@@ -17,10 +18,9 @@ import org.roettig.MLToolbox.model.Model;
 import org.roettig.MLToolbox.model.NuSVCModel;
 import org.roettig.MLToolbox.model.NuSVRModel;
 import org.roettig.MLToolbox.model.OneClassSVM;
+import org.roettig.MLToolbox.model.TCSVCModel;
 import org.roettig.MLToolbox.test.data.DataSource;
 import org.roettig.MLToolbox.util.InstanceReader;
-import org.roettig.MLToolbox.util.MLHelper;
-import org.roettig.MLToolbox.util.SerialClone;
 import org.roettig.MLToolbox.validation.ModelValidation;
 
 
@@ -173,50 +173,7 @@ public class ModelTest extends TestCase
 		assertEquals(0.9621380846325167,qual,1e-6);
 		System.out.println(qual);
 	}
-	
-	public void testCSVCcloning() throws Exception
-	{
-		/*
-		RBFKernel rbf = new RBFKernel();
-		rbf.setGamma(1.0);
 		
-		DefaultInstanceContainer<PrimalInstance> samples = InstanceReader.read(DataSource.class.getResourceAsStream("iris.dat"), 5, true);
-		
-		DefaultInstanceContainer<PrimalInstance>  train = new DefaultInstanceContainer<PrimalInstance>();
-		DefaultInstanceContainer<PrimalInstance>  test  = new DefaultInstanceContainer<PrimalInstance>();
-		
-		ModelValidation.getStratifiedSplit(0.5, samples, train, test);
-		
-		CSVCModel<PrimalInstance>  m  = new CSVCModel<PrimalInstance>(rbf);
-		
-		Model<PrimalInstance>  m2 = SerialClone.clone(m);
-		
-		
-		m.train(train);
-		List<Prediction> preds1 = m.predict(test);
-		
-		m2.train(train);
-		List<Prediction> preds2 = m2.predict(test);
-		
-		double q1 = m.getQuality(preds1);
-		double q2 = m.getQuality(preds2);
-		System.out.println("# q1="+q1+" q2="+q2);
-		
-		double qual = ModelValidation.CV(5, samples, m);
-		*/
-		/*
-		double qual = ModelValidation.CV(5, samples, m);
-		assertEquals(0.96,qual,1e-6);
-		System.out.println("#="+qual);
-		
-		
-		double qual2 = ModelValidation.CV(5, samples, m2);
-		assertEquals(0.96,qual2,1e-6);
-		System.out.println("#="+qual2);
-		*/
-	}
-	
-	
 	public void testNuSVR() throws Exception
 	{
 		RBFKernel rbf = new RBFKernel();
@@ -233,5 +190,48 @@ public class ModelTest extends TestCase
 		
 		
 		assertEquals(0.9862527328922244,qual,1e-6);
+	}
+	
+	public void testTCSVC1() throws Exception
+	{
+		RBFKernel k = new RBFKernel();
+		k.setGamma(0.001);
+		
+		TCSVCModel m = new TCSVCModel( k );
+		m.setC(100.0);
+		
+		DefaultInstanceContainer<PrimalInstance>  data = InstanceReader.read(DataSource.class.getResourceAsStream("iris.dat"), 5, true);
+		
+		InstanceContainer<PrimalInstance> samples = ModelValidation.binaryDivision(data, data.get(51).getLabel(), TCSVCModel.POS, TCSVCModel.NEG);
+		
+		DefaultInstanceContainer<PrimalInstance>  train = new DefaultInstanceContainer<PrimalInstance>();
+		DefaultInstanceContainer<PrimalInstance>  test  = new DefaultInstanceContainer<PrimalInstance>();
+		ModelValidation.getStratifiedSplit(0.8, samples, train, test);
+		
+		m.train(train);
+		List<Prediction> preds = m.predict(test);
+		
+		double q1 = m.getQualityMeasure().getQuality(preds);
+		
+		FactorLabel pos = new FactorLabel("pos");
+		FactorLabel neg = new FactorLabel("neg");
+		
+		samples = ModelValidation.binaryDivision(data, data.get(51).getLabel(), pos, neg);
+		
+		train = new DefaultInstanceContainer<PrimalInstance>();
+		test  = new DefaultInstanceContainer<PrimalInstance>();
+		ModelValidation.getStratifiedSplit(0.8, samples, train, test);
+		
+		RBFKernel k2 = new RBFKernel();
+		k2.setGamma(0.001);
+		CSVCModel<PrimalInstance> m2 = new CSVCModel<PrimalInstance>(k2);
+		m2.setC(100.0);
+		
+		m2.train(train);
+		preds = m2.predict(test);
+		
+		double q2 = m2.getQualityMeasure().getQuality(preds);
+		
+		assertEquals(q1,q2,0.02);
 	}
 }
