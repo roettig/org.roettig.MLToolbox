@@ -3,9 +3,11 @@ package org.roettig.MLToolbox.base.impl;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 import org.roettig.MLToolbox.base.instance.Instance;
 import org.roettig.MLToolbox.base.instance.InstanceContainer;
@@ -119,5 +121,30 @@ public class DefaultInstanceContainer<T extends Instance> implements InstanceCon
 	public Collection<T> getUnlabeledData()
 	{
 		return unlab_data;
+	}
+
+	@Override
+	public boolean isFactorLabelled()
+	{
+		if(this.data.size()>0)
+		{
+			Label lab = this.data.get(0).getLabel();
+			return (lab instanceof FactorLabel);
+		}
+		return false;
+	}
+	
+	public static <T extends Instance> int getNumberOfFactors(InstanceContainer<T> data)
+	{
+		Set<Label> factors = new HashSet<Label>();
+		for(Instance i: data)
+		{
+			Label lab = i.getLabel();
+			if(lab instanceof FactorLabel)
+			{
+				factors.add(lab);
+			}
+		}
+		return factors.size();
 	}
 }

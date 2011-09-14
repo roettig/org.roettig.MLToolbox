@@ -74,4 +74,11 @@ public interface InstanceContainer<T extends Instance> extends Iterable<T>, Seri
 	 * @return unlabeled data
 	 */
 	Collection<T> getUnlabeledData();
+	
+	/**
+	 * returns whether the data set solely contains factor labels.
+	 * 
+	 * @return 
+	 */
+	boolean isFactorLabelled();
 }

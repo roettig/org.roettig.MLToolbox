@@ -7,6 +7,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
+import org.roettig.MLToolbox.base.label.FactorLabel;
+import org.roettig.MLToolbox.base.label.Label;
+
 public class FilteredDataView<T extends Instance> implements InstanceContainer<T>
 {
 	
@@ -115,5 +118,16 @@ public class FilteredDataView<T extends Instance> implements InstanceContainer<T
 	public void clear()
 	{
 		// NOP
+	}
+	
+	@Override
+	public boolean isFactorLabelled()
+	{
+		if(this.data.size()>0)
+		{
+			Label lab = this.data.get(0).getLabel();
+			return (lab instanceof FactorLabel);
+		}
+		return false;
 	}
 }
