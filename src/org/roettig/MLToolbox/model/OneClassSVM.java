@@ -1,40 +1,24 @@
 package org.roettig.MLToolbox.model;
 
-
-import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-import java.util.Random;
 
 import org.roettig.MLToolbox.base.Prediction;
-import org.roettig.MLToolbox.base.impl.DefaultInstanceContainer;
-import org.roettig.MLToolbox.base.instance.FilteredDataView;
 import org.roettig.MLToolbox.base.instance.Instance;
 import org.roettig.MLToolbox.base.instance.InstanceContainer;
-import org.roettig.MLToolbox.base.instance.InstanceFilter;
-import org.roettig.MLToolbox.base.instance.InvertedFilter;
-import org.roettig.MLToolbox.base.instance.LabelSupplier;
-import org.roettig.MLToolbox.base.instance.PrimalInstance;
 import org.roettig.MLToolbox.base.label.FactorLabel;
 import org.roettig.MLToolbox.base.label.Label;
+import org.roettig.MLToolbox.base.label.NumericLabel;
 import org.roettig.MLToolbox.base.parameter.Parameter;
 import org.roettig.MLToolbox.kernels.KernelFunction;
-import org.roettig.MLToolbox.kernels.KernelMatrix;
-import org.roettig.MLToolbox.kernels.RBFKernel;
-import org.roettig.MLToolbox.test.data.DataSource;
-import org.roettig.MLToolbox.util.InstanceReader;
-import org.roettig.MLToolbox.util.MLHelper;
-import org.roettig.MLToolbox.util.libsvm.libsvmDelegate;
-import org.roettig.MLToolbox.util.libsvm.svm;
-import org.roettig.MLToolbox.util.libsvm.svm_parameter;
-import org.roettig.MLToolbox.validation.ModelValidation;
-import org.roettig.MLToolbox.validation.Precision;
-import org.roettig.MLToolbox.validation.QualityMeasure;
+import org.roettig.MLToolbox.model.svm.DefaultSVMTrainingParams;
+import org.roettig.MLToolbox.model.svm.LIBSVMDelegate;
+import org.roettig.MLToolbox.model.svm.SVMModel;
+import org.roettig.MLToolbox.model.svm.SVMTrainingParams;
 import org.roettig.MLToolbox.validation.Sensitivity;
-import org.roettig.MLToolbox.validation.Specificity;
 
-public class OneClassSVM<T extends Instance> extends LibsvmModel<T> implements ClassificationModel
+
+public class OneClassSVM<T extends Instance> extends SVMModel<T> implements ClassificationModel
 {
 	private static final long	serialVersionUID	= -9073527647916178940L;
 
@@ -53,20 +37,8 @@ public class OneClassSVM<T extends Instance> extends LibsvmModel<T> implements C
 	public OneClassSVM(KernelFunction<T> k_fun_)
 	{
 		super(k_fun_);
-		
 		this.registerParameter(NU, nu);
-		
 		qm = new Sensitivity(pos);
-
-	}
-	
-	@Override
-	protected void initLibsvm()
-	{
-		super.initLibsvm();
-		libsvmdelegate.param.svm_type    = svm_parameter.ONE_CLASS;
-		libsvmdelegate.param.kernel_type = svm_parameter.PRECOMPUTED;
-		libsvmdelegate.param.nu  = (Double) this.getParameter(NU).getCurrentValue();
 	}
 	
 	/**
@@ -80,19 +52,18 @@ public class OneClassSVM<T extends Instance> extends LibsvmModel<T> implements C
 		this.registerParameter(NU, nu);
 	}
 	
-	private Label pos_label;
+	
 	
 	@Override
 	public void train(InstanceContainer<T> trainingdata)
 	{
-		this.trainingdata = trainingdata;
-		if(trainingdata.getLabelSupplier()!=null)
-		{
-			pos_label = trainingdata.getLabelSupplier().getLabel(0); 
-		}
-		super.train(this.trainingdata);
+		delegate = new LIBSVMDelegate<T>();
+		super.train(trainingdata);
 	}
 
+	//private Label pos_label;
+	
+	/*
 	@Override
 	public List<Prediction> predict(InstanceContainer<T> testdata)
 	{
@@ -131,5 +102,39 @@ public class OneClassSVM<T extends Instance> extends LibsvmModel<T> implements C
 			preds.add(pred);
 		}
 		return preds;
+	}
+	*/
+	
+	
+	@Override
+	protected SVMTrainingParams getTrainingParameters()
+	{
+		SVMTrainingParams ret = new DefaultSVMTrainingParams();
+		double nu = (Double) this.getParameter(NU).getCurrentValue();
+		ret.setValue(SVMTrainingParams.NU, nu);
+		ret.setFlag(SVMTrainingParams.OneClass);
+		return ret;
+	}
+
+	@Override
+	public List<Prediction> predict(InstanceContainer<T> testdata)
+	{
+		List<Prediction> ret   = new ArrayList<Prediction>();
+		List<Double>     preds = delegate.predict(testdata);
+		
+		int N = testdata.size();
+		for(int i=0;i<N;i++)
+		{
+			double yp = preds.get(i); 
+			Label  pred_label = null;
+			if(yp>=0)
+				pred_label = pos;
+			else
+				pred_label = neg;
+			Prediction pred = new Prediction(testdata.get(i), pos, pred_label);
+			//Prediction pred = new Prediction(testdata.get(i),testdata.get(i).getLabel(),pred_label);
+			ret.add(pred);
+		}
+		return ret;
 	}
 }
