@@ -8,7 +8,6 @@ import org.roettig.MLToolbox.base.instance.Instance;
 import org.roettig.MLToolbox.base.instance.InstanceContainer;
 import org.roettig.MLToolbox.kernels.KernelFunction;
 import org.roettig.MLToolbox.kernels.KernelMatrix;
-import org.roettig.MLToolbox.util.libsvm.libsvmDelegate;
 import org.roettig.MLToolbox.util.libsvm.svm;
 import org.roettig.MLToolbox.util.libsvm.svm_model;
 import org.roettig.MLToolbox.util.libsvm.svm_node;
@@ -44,13 +43,13 @@ public class LIBSVMDelegate<T extends Instance> implements SVMModelDelegate<T>
 			if(param.svm_type==svm_parameter.ONE_CLASS)
 			{
 				double val[] = new double[1];
-				svm.svm_predict_values(model, libsvmDelegate.makeSVMnode(K.getRow(i),0), val);
+				svm.svm_predict_values(model, makeSVMnode(K.getRow(i),0), val);
 				double yp = val[0];
 				preds.add(yp);
 			}
 			else
 			{
-				double yp = svm.svm_predict(model, libsvmDelegate.makeSVMnode(K.getRow(i),0));
+				double yp = svm.svm_predict(model, makeSVMnode(K.getRow(i),0));
 				preds.add(yp);
 			}
 		}
