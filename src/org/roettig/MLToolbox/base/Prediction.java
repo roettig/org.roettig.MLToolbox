@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import org.roettig.MLToolbox.base.instance.Instance;
+import org.roettig.MLToolbox.base.label.FactorLabel;
 import org.roettig.MLToolbox.base.label.Label;
 
 /**
@@ -55,6 +56,14 @@ public class Prediction
 	{
 		return yp;
 	}	
+	
+	public String toString()
+	{
+		if(y instanceof FactorLabel)
+			return String.format("yt:%s yp:%s", (this.y!=null? this.y.toString() : "null") , (this.yp!=null? this.yp.toString() : "null"));
+		else
+			return String.format("yt:%e yp:%e", this.y.getDoubleValue(), this.yp.getDoubleValue());
+	}
 	
 	public static void split(Collection<Prediction> in, Collection<Label> yt, Collection<Label> yp)
 	{
