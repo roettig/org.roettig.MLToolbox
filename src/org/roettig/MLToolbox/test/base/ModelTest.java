@@ -1,5 +1,6 @@
 package org.roettig.MLToolbox.test.base;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -292,5 +293,57 @@ public class ModelTest extends TestCase
 		
 		List<Prediction> preds = m.predict(test);
 		assertEquals(0.829477167998876,m.getQuality(preds),1e-5);
+	}
+	
+	public void testStoreRestore1() throws Exception
+	{
+		DefaultInstanceContainer<PrimalInstance>  data = InstanceReader.read(DataSource.class.getResourceAsStream("iris.dat"), 5, true);
+
+		DefaultInstanceContainer<PrimalInstance>  train = new DefaultInstanceContainer<PrimalInstance>();
+		DefaultInstanceContainer<PrimalInstance>  test  = new DefaultInstanceContainer<PrimalInstance>();
+		
+		ModelValidation.getStratifiedSplit(0.5, data, train, test);
+		
+		kNN<PrimalInstance> m = new kNN<PrimalInstance>(new LinearKernel() ) ;
+		m.addK(3);
+		m.train(train);
+		
+		List<Prediction> preds = m.predict(test);
+		assertEquals(0.920815165434747,m.getQuality(preds),1e-5);
+		
+		File tmp = File.createTempFile("KNN", "MODEL");
+		tmp.deleteOnExit();
+		m.store(tmp.getAbsolutePath());
+		
+		Model<PrimalInstance> m2 = (Model<PrimalInstance>) Model.load(tmp.getAbsolutePath());
+		preds = m2.predict(test);
+		assertEquals(0.920815165434747,m2.getQuality(preds),1e-5);
+	}
+	
+	public void testStoreRestore2() throws Exception
+	{
+		DefaultInstanceContainer<PrimalInstance>  data = InstanceReader.read(DataSource.class.getResourceAsStream("iris.dat"), 5, true);
+
+		DefaultInstanceContainer<PrimalInstance>  train = new DefaultInstanceContainer<PrimalInstance>();
+		DefaultInstanceContainer<PrimalInstance>  test  = new DefaultInstanceContainer<PrimalInstance>();
+		
+		ModelValidation.getStratifiedSplit(0.5, data, train, test);
+		
+		RBFKernel rbf = new RBFKernel();
+		rbf.setGamma(0.0001);
+		
+		CSVCModel<PrimalInstance> m = new CSVCModel<PrimalInstance>( new RBFKernel() ) ;
+		m.train(train);
+		
+		List<Prediction> preds = m.predict(test);
+		assertEquals(0.9475675798155576,m.getQuality(preds),1e-5);
+		
+		File tmp = File.createTempFile("CSVC", "MODEL");
+		tmp.deleteOnExit();
+		m.store(tmp.getAbsolutePath());
+		
+		Model<PrimalInstance> m2 = (Model<PrimalInstance>) Model.load(tmp.getAbsolutePath());
+		preds = m2.predict(test);
+		assertEquals(0.9475675798155576,m2.getQuality(preds),1e-5);
 	}
 }
