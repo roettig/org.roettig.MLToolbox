@@ -20,7 +20,7 @@ import org.roettig.MLToolbox.validation.FMeasure;
 public class kNN<T extends Instance> extends Model<T> implements ClassificationModel
 {
 	
-	public static String K = CSVCModel.class.getCanonicalName()+"_k";
+	public static String K = kNN.class.getCanonicalName()+"_k";
 	
 	private Parameter<Integer> k = new Parameter<Integer>(K,new Integer[]{1});
 	
