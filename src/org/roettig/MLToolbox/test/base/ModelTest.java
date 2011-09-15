@@ -20,6 +20,7 @@ import org.roettig.MLToolbox.model.Model;
 import org.roettig.MLToolbox.model.NuSVCModel;
 import org.roettig.MLToolbox.model.NuSVRModel;
 import org.roettig.MLToolbox.model.OneClassSVM;
+import org.roettig.MLToolbox.model.RegressionTreeM5P;
 import org.roettig.MLToolbox.model.TCSVCModel;
 import org.roettig.MLToolbox.model.kNN;
 import org.roettig.MLToolbox.test.data.DataSource;
@@ -273,5 +274,23 @@ public class ModelTest extends TestCase
 		List<Prediction> preds = m.predict(test);
 		assertEquals(0.920815165434747,m.getQuality(preds),1e-5);
 
+	}
+	
+	public void testM5P() throws IOException
+	{
+		DefaultInstanceContainer<PrimalInstance>  data = InstanceReader.read(DataSource.class.getResourceAsStream("sin.dat"), 2, false);
+
+		DefaultInstanceContainer<PrimalInstance>  train = new DefaultInstanceContainer<PrimalInstance>();
+		DefaultInstanceContainer<PrimalInstance>  test  = new DefaultInstanceContainer<PrimalInstance>();
+		
+		ModelValidation.getSplit(0.8, data, train, test);
+		
+		RegressionTreeM5P m = new RegressionTreeM5P();
+		m.addM(5);
+		
+		m.train(train);
+		
+		List<Prediction> preds = m.predict(test);
+		assertEquals(0.829477167998876,m.getQuality(preds),1e-5);
 	}
 }
