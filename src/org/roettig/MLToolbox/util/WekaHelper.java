@@ -23,7 +23,7 @@ import weka.core.Instances;
  */
 public class WekaHelper
 {
-	public static weka.core.Instance convert(PrimalInstance inst) throws Exception
+	public static weka.core.Instance convert(PrimalInstance inst)
 	{
 		FastVector atts = new FastVector();
 		
