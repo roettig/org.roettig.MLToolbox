@@ -1,20 +1,16 @@
 package org.roettig.MLToolbox.model;
 
-import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import org.roettig.MLToolbox.base.Prediction;
-import org.roettig.MLToolbox.base.impl.DefaultInstanceContainer;
 import org.roettig.MLToolbox.base.instance.InstanceContainer;
 import org.roettig.MLToolbox.base.instance.PrimalInstance;
 import org.roettig.MLToolbox.base.label.Label;
 import org.roettig.MLToolbox.base.label.NumericLabel;
 import org.roettig.MLToolbox.base.parameter.Parameter;
-import org.roettig.MLToolbox.test.data.DataSource;
-import org.roettig.MLToolbox.util.InstanceReader;
 import org.roettig.MLToolbox.util.WekaHelper;
-import org.roettig.MLToolbox.validation.ModelValidation;
 import org.roettig.MLToolbox.validation.PearsonMeasure;
 
 import weka.classifiers.trees.M5P;

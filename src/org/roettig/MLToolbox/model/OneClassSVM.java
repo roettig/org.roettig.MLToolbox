@@ -8,7 +8,6 @@ import org.roettig.MLToolbox.base.instance.Instance;
 import org.roettig.MLToolbox.base.instance.InstanceContainer;
 import org.roettig.MLToolbox.base.label.FactorLabel;
 import org.roettig.MLToolbox.base.label.Label;
-import org.roettig.MLToolbox.base.label.NumericLabel;
 import org.roettig.MLToolbox.base.parameter.Parameter;
 import org.roettig.MLToolbox.kernels.KernelFunction;
 import org.roettig.MLToolbox.model.svm.DefaultSVMTrainingParams;
