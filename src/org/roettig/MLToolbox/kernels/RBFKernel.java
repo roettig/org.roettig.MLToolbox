@@ -43,13 +43,13 @@ public class RBFKernel extends KernelFunction<PrimalInstance>
 	*/
 
 	@Override
-	public double compute(PrimalInstance x, PrimalInstance y) throws Exception
+	public double compute(PrimalInstance x, PrimalInstance y)
 	{		
 		double xf[] = x.getFeatures();
 		double yf[] = y.getFeatures();
 		
 		if(xf.length!=yf.length)
-			throw new Exception("Unsupported objects used in kernel evaluation: dimensions do not match");
+			throw new RuntimeException("Unsupported objects used in kernel evaluation: dimensions do not match");
 		
 		double d = 0.0;
 		int    N = xf.length;

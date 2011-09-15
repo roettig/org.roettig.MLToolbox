@@ -25,7 +25,7 @@ public abstract class KernelFunction<T extends Instance> extends DefaultParametr
 	 * @return double
 	 * @throws Exception
 	 */
-	public final double computeN(T x, T y) throws Exception
+	public final double computeN(T x, T y)
 	{
 		return  compute(x,y)/(Math.sqrt(compute(x,x)*compute(y,y)));
 	}
@@ -39,8 +39,9 @@ public abstract class KernelFunction<T extends Instance> extends DefaultParametr
 	 * @return double 
 	 * @throws Exception
 	 */
-	public abstract double compute(T x, T y) throws Exception;
+	public abstract double compute(T x, T y);
 	
+
 	private boolean normalize = true;
 	
 	/**
