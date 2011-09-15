@@ -69,11 +69,13 @@ public abstract class Model<T extends Instance> extends DefaultParametrizedCompo
 	{
 		return this.qm;
 	}
-
-	protected QualityMeasure qm;
 	
-	protected InstanceContainer<T> trainingdata;
-	
+	/**
+	 * stores the model in serialized form to a file.
+	 * 
+	 * @param filename
+	 * @throws Exception
+	 */
 	public void store(String filename) throws Exception
 	{
 		FileOutputStream f_out = new FileOutputStream(filename);
@@ -84,6 +86,13 @@ public abstract class Model<T extends Instance> extends DefaultParametrizedCompo
 		f_out.close();
 	}
 
+	/**
+	 * Factory method to load a serialized model from file.
+	 *  
+	 * @param filename
+	 * @return
+	 * @throws Exception
+	 */
 	public static Model<?> load(String filename) throws Exception
 	{
 		// restore object from file ...
@@ -96,4 +105,8 @@ public abstract class Model<T extends Instance> extends DefaultParametrizedCompo
 		f_in.close();
 		return ret;
 	}
+	
+	protected QualityMeasure qm;
+	
+	protected InstanceContainer<T> trainingdata;
 }
