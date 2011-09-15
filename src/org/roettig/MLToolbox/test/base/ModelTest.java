@@ -1,5 +1,6 @@
 package org.roettig.MLToolbox.test.base;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -14,6 +15,7 @@ import org.roettig.MLToolbox.base.label.FactorLabel;
 import org.roettig.MLToolbox.kernels.LinearKernel;
 import org.roettig.MLToolbox.kernels.RBFKernel;
 import org.roettig.MLToolbox.model.CSVCModel;
+import org.roettig.MLToolbox.model.DecisionTreeJ48;
 import org.roettig.MLToolbox.model.Model;
 import org.roettig.MLToolbox.model.NuSVCModel;
 import org.roettig.MLToolbox.model.NuSVRModel;
@@ -233,5 +235,24 @@ public class ModelTest extends TestCase
 		double q2 = m2.getQualityMeasure().getQuality(preds);
 		
 		assertEquals(q1,q2,0.02);
+	}
+	
+	public void testDTreeJ48() throws IOException
+	{
+		DefaultInstanceContainer<PrimalInstance>  data = InstanceReader.read(DataSource.class.getResourceAsStream("iris.dat"), 5, true);
+
+		DefaultInstanceContainer<PrimalInstance>  train = new DefaultInstanceContainer<PrimalInstance>();
+		DefaultInstanceContainer<PrimalInstance>  test  = new DefaultInstanceContainer<PrimalInstance>();
+		
+		ModelValidation.getStratifiedSplit(0.8, data, train, test);
+		
+		DecisionTreeJ48 m = new DecisionTreeJ48();
+		m.addC(0.4);
+		m.addM(5);
+		
+		m.train(train);
+		
+		List<Prediction> preds = m.predict(test);
+		assertEquals(0.9681794470526864,m.getQuality(preds),1e-5);
 	}
 }
