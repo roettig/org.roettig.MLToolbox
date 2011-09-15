@@ -42,6 +42,14 @@ public abstract class KernelFunction<T extends Instance> extends DefaultParametr
 	public abstract double compute(T x, T y);
 	
 
+	public final double getDistance(T x, T y)
+	{
+		double Kxx = compute(x, x);
+		double Kyy = compute(y, y);
+		double Kxy = compute(x, y);
+		return Math.sqrt(Kxx+Kyy-2*Kxy);
+	}
+	
 	private boolean normalize = true;
 	
 	/**
