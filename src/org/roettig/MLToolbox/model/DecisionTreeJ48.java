@@ -58,6 +58,9 @@ public class DecisionTreeJ48 extends Model<PrimalInstance> implements Classifica
         
         classifier.setUnpruned(false);
         
+        classifier.setConfidenceFactor((float) c.getCurrentValue().floatValue() );
+        classifier.setMinNumObj(m.getCurrentValue());
+        
         this.data = WekaHelper.convert(trainingdata);
         str2label.clear();
         
