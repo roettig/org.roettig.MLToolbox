@@ -1,7 +1,11 @@
 <project default="build">
 
+	<property name="major" value="0"/>
+	<property name="minor" value="2"/>
+	<property name="patch" value="0"/>
+		
 	<target name="build" depends="compile">
-		<jar destfile="build/org.roettig.MLToolbox.jar" basedir="build/classes"/>
+		<jar destfile="build/org.roettig.MLToolbox-${major}.${minor}.${patch}.jar" basedir="build/classes"/>
 	</target>
 	
 	<target name="compile" depends="prepare">
@@ -13,17 +17,38 @@
 				<pathelement location="lib/jnisvmlight.jar"/>
 				<pathelement location="lib/org.roettig.maths.jar"/>
 				<pathelement location="lib/junit.jar"/>
+				<pathelement location="lib/weka.jar"/>
 		    </classpath>
 		</javac>
 		
 		<!-- copy sources -->
 		<copy todir="build/classes">
 		   <fileset dir="src" includes="**/*.java"/>
+			<fileset dir="src" includes="**/*.dat"/>
 		</copy>
 		
 	</target>
 	
-	<target name="prepare">
+	<target name="test" depends="build">
+			<junit printsummary="yes" haltonfailure="yes" showoutput="yes" fork="true">
+				<env key="LD_LIBRARY_PATH" path="lib"/>
+				<classpath>
+					<pathelement location="build/org.roettig.MLToolbox-${major}.${minor}.${patch}.jar"/>
+					<fileset dir="lib">
+						<include name="*.jar"/>
+					</fileset>
+				</classpath>
+
+				<!--<formatter type="plain"/>-->
+				<test name="org.roettig.MLToolbox.test.base.BaseTest"/>
+				<test name="org.roettig.MLToolbox.test.base.KernelTest"/>
+				<test name="org.roettig.MLToolbox.test.base.ModelTest"/>
+				<test name="org.roettig.MLToolbox.test.base.ModelValidationTest"/>
+				<test name="org.roettig.MLToolbox.test.base.QualityMeasureTest"/>
+			</junit>
+	</target>
+	
+	<target name="prepare" depends="clean">
 		<delete dir="build"/>
 		<mkdir dir="build"/>
 		<mkdir dir="build/classes"/>
