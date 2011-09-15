@@ -21,6 +21,7 @@ import org.roettig.MLToolbox.model.NuSVCModel;
 import org.roettig.MLToolbox.model.NuSVRModel;
 import org.roettig.MLToolbox.model.OneClassSVM;
 import org.roettig.MLToolbox.model.TCSVCModel;
+import org.roettig.MLToolbox.model.kNN;
 import org.roettig.MLToolbox.test.data.DataSource;
 import org.roettig.MLToolbox.util.InstanceReader;
 import org.roettig.MLToolbox.validation.ModelValidation;
@@ -254,5 +255,23 @@ public class ModelTest extends TestCase
 		
 		List<Prediction> preds = m.predict(test);
 		assertEquals(0.9681794470526864,m.getQuality(preds),1e-5);
+	}
+	
+	public void testkNN() throws IOException
+	{
+		DefaultInstanceContainer<PrimalInstance>  data = InstanceReader.read(DataSource.class.getResourceAsStream("iris.dat"), 5, true);
+
+		DefaultInstanceContainer<PrimalInstance>  train = new DefaultInstanceContainer<PrimalInstance>();
+		DefaultInstanceContainer<PrimalInstance>  test  = new DefaultInstanceContainer<PrimalInstance>();
+		
+		ModelValidation.getStratifiedSplit(0.5, data, train, test);
+		
+		kNN<PrimalInstance> m = new kNN<PrimalInstance>(new LinearKernel() ) ;
+		m.addK(3);
+		m.train(train);
+		
+		List<Prediction> preds = m.predict(test);
+		assertEquals(0.920815165434747,m.getQuality(preds),1e-5);
+
 	}
 }
